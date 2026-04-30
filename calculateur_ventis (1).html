@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur VENTIS — Aérothermes eau chaude</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --blue-dark:#0a2540;--blue-mid:#1a4a7a;--blue:#1e6bb8;--blue-light:#d6eaf8;--blue-pale:#f0f7ff;
+  --accent:#e8401c;--text:#0a2540;--text-2:#4a6080;--text-3:#8aaccc;
+  --border:#ccdcec;--bg:#f4f8fc;--white:#fff;
+  --warn:#c0580a;--warn-bg:#fff3e8;--green:#1a7a4a;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+header{background:var(--blue-dark);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(10,37,64,.25)}
+.logo{font-size:15px;font-weight:600;color:#fff;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.badge{background:var(--accent);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.06em}
+.hdr-sub{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace}
+main{max-width:1260px;margin:0 auto;padding:28px 24px 60px}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(10,37,64,.06)}
+.ptitle{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.ptitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:11px;font-weight:500;color:var(--text-2);letter-spacing:.03em;text-transform:uppercase}
+.fld input,.fld select{height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;transition:border-color .15s;width:100%}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--blue);background:var(--white)}
+.hint{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace}
+.sum-bar{background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:var(--r);padding:10px 16px;display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin-top:16px;font-size:12px;color:var(--text-2)}
+.sum-bar span{font-weight:600;color:var(--blue)}
+.err-bar{background:#fff3f0;border:1px solid #f5b8a8;border-radius:var(--r);padding:10px 16px;color:var(--accent);font-size:13px;font-weight:500;margin-top:12px;display:none}
+.btn-calc{margin-top:20px;width:100%;height:48px;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-calc:hover{background:var(--blue-mid)}
+.btn-calc:active{transform:scale(.99)}
+.btn-bar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.btn-sec{height:36px;padding:0 16px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;transition:border-color .15s,background .15s}
+.btn-sec:hover{border-color:var(--blue);background:var(--blue-pale);color:var(--blue)}
+.fiche-sec{display:none}
+.fiche-sec.visible{display:block}
+.fiche-hdr{background:var(--blue-dark);border-radius:var(--rl) var(--rl) 0 0;padding:14px 20px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.fiche-hdr h2{color:#fff;font-size:15px;font-weight:600}
+.fiche-cond{color:var(--text-3);font-size:11px;font-family:'DM Mono',monospace}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--rl) var(--rl);box-shadow:0 2px 8px rgba(10,37,64,.07)}
+table.vt{width:100%;border-collapse:collapse;font-size:12px;min-width:920px;background:var(--white)}
+table.vt thead tr.rg th{background:var(--blue-mid);color:#fff;font-size:11px;font-weight:600;padding:7px 8px;text-align:center;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em}
+table.vt thead tr.rg th.th-hd{background:var(--blue-dark);border-color:rgba(255,255,255,.1)}
+table.vt thead tr.rc th{background:var(--blue-light);color:var(--blue-dark);font-size:10.5px;font-weight:600;padding:6px 8px;text-align:center;border:1px solid var(--border);white-space:nowrap;letter-spacing:.02em}
+table.vt tbody tr.fsep td{background:var(--blue-dark);color:var(--text-3);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:none}
+table.vt tbody tr td{padding:5px 8px;border:1px solid #e8f0f8;text-align:right;color:var(--text);white-space:nowrap;font-family:'DM Mono',monospace;font-size:11.5px}
+table.vt tbody tr td.tdm{text-align:left;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12px;color:var(--blue-dark);background:var(--blue-pale)}
+table.vt tbody tr td.tdv{text-align:center;font-size:10.5px;color:var(--text-2);background:var(--blue-pale)}
+table.vt tbody tr:nth-child(even) td:not(.tdm):not(.tdv){background:#f8fbff}
+table.vt tbody tr:hover td{background:#e8f4ff}
+.Qv{font-weight:700;color:var(--blue)}
+.wv{color:var(--warn);font-weight:600}
+.note{font-size:11px;color:var(--text-2);margin-top:12px;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;line-height:1.7}
+@media print{
+  header,.panel,.btn-calc,.btn-bar{display:none!important}
+  body{background:#fff;font-size:10px}
+  main{padding:0;max-width:100%}
+  .fiche-sec{display:block!important}
+  .tbl-wrap{border:1px solid #ccc;box-shadow:none}
+  table.vt{font-size:9.5px}
+  .note{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#1e6bb8"/><path d="M5 16L11 6L17 16" stroke="#fff" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 12L14 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Calculateur VENTIS
+    <span class="badge">AÉROTHERMES EAU</span>
+  </div>
+  <div class="hdr-sub">v1.0 — Autonome, sans connexion internet requise</div>
+</header>
+
+<main>
+<div class="panel">
+  <div class="ptitle">Conditions de calcul</div>
+  <div class="fields">
+    <div class="fld">
+      <label>Fluide</label>
+      <select id="fl" onchange="uf()">
+        <option value="water">Eau pure</option>
+        <option value="g20">Eau glycolée 20%</option>
+        <option value="g30">Eau glycolée 30%</option>
+        <option value="g40">Eau glycolée 40%</option>
+        <option value="g50">Eau glycolée 50%</option>
+      </select>
+      <div class="hint" id="tgel_hint">Point de gel : 0 °C</div>
+    </div>
+    <div class="fld">
+      <label>T départ fluide</label>
+      <input type="number" id="td" value="67" step="1" oninput="chk()">
+      <div class="hint">°C — entrée batterie</div>
+    </div>
+    <div class="fld">
+      <label>T retour fluide</label>
+      <input type="number" id="tr" value="47" step="1" oninput="chk()">
+      <div class="hint">°C — sortie batterie</div>
+    </div>
+    <div class="fld">
+      <label>T air entrée</label>
+      <input type="number" id="ta" value="15" step="1" oninput="chk()">
+      <div class="hint">°C — ambiance locale</div>
+    </div>
+    <div class="fld">
+      <label>Altitude site</label>
+      <input type="number" id="al" value="0" step="100" min="0" oninput="chk()">
+      <div class="hint">m — correction densité air</div>
+    </div>
+  </div>
+  <div id="err_bar" class="err-bar"></div>
+  <div id="sum_bar" class="sum-bar">
+    T moy fluide : <span id="s_tm">—</span>
+    &nbsp;&nbsp;DTM (Tm − Ta) : <span id="s_dtm">—</span>
+    &nbsp;&nbsp;DTLM : <span id="s_dtlm">—</span>
+    &nbsp;&nbsp;ΔT fluide : <span id="s_dtf">—</span>
+  </div>
+  <button class="btn-calc" onclick="go()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Générer la fiche de performances
+  </button>
+</div>
+
+<div class="fiche-sec" id="fsec">
+  <div class="btn-bar">
+    <button class="btn-sec" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimer / Sauvegarder PDF
+    </button>
+    <button class="btn-sec" onclick="exportCSV()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exporter CSV (Excel)
+    </button>
+  </div>
+  <div class="fiche-hdr">
+    <h2>Aérotherme eau chaude type VENTIS</h2>
+    <div class="fiche-cond" id="fiche_cond"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table class="vt">
+      <thead>
+        <tr class="rg">
+          <th class="th-hd" rowspan="2" style="text-align:left;padding-left:12px;min-width:110px">Type</th>
+          <th class="th-hd" rowspan="2" style="min-width:90px">Vitesse<br>tr/mn</th>
+          <th colspan="6">Grande vitesse</th>
+          <th colspan="6">Petite vitesse</th>
+        </tr>
+        <tr class="rc">
+          <th>Débit<br>m³/h</th><th>Puissance<br>kW</th><th>T° soufflage<br>°C</th><th>Débit eau<br>l/s</th><th>Pdc eau<br>kPa</th><th>Nson<br>dB(A)</th>
+          <th>Débit<br>m³/h</th><th>Puissance<br>kW</th><th>T° soufflage<br>°C</th><th>Débit eau<br>l/s</th><th>Pdc eau<br>kPa</th><th>Nson<br>dB(A)</th>
+        </tr>
+      </thead>
+      <tbody id="vtbody"></tbody>
+    </table>
+  </div>
+  <div class="note" id="fnote"></div>
+</div>
+</main>
+
+<script>
+var FL={
+  water:{cp:4186,rho:1000,name:"Eau pure",tgel:0,corr:1.0},
+  g20:{cp:4050,rho:1028,name:"Glycol 20%",tgel:-9,corr:0.967},
+  g30:{cp:3910,rho:1040,name:"Glycol 30%",tgel:-16,corr:0.934},
+  g40:{cp:3750,rho:1052,name:"Glycol 40%",tgel:-24,corr:0.896},
+  g50:{cp:3560,rho:1060,name:"Glycol 50%",tgel:-37,corr:0.850}
+};
+var CAT=[
+  {id:"VT 3311 M",vit:"1350 / 1050",fam:"T3",q_gv:1900,k_gv:0.1519,qe_gv:0.13,pdc_gv:3.3,ns_gv:39,q_pv:1485,k_pv:0.1310,qe_pv:0.11,pdc_pv:2.6,ns_pv:36},
+  {id:"VT 3312 M",vit:"1350 / 1050",fam:"T3",q_gv:1815,k_gv:0.2673,qe_gv:0.22,pdc_gv:2.6,ns_gv:39,q_pv:1440,k_pv:0.2295,qe_pv:0.19,pdc_pv:2.0,ns_pv:36},
+  {id:"VT 3313 M",vit:"1350 / 1050",fam:"T3",q_gv:1700,k_gv:0.3388,qe_gv:0.28,pdc_gv:2.4,ns_gv:39,q_pv:1355,k_pv:0.2884,qe_pv:0.24,pdc_pv:1.8,ns_pv:36},
+  {id:"VT 3421 M",vit:"1350 / 1200",fam:"T3",q_gv:3135,k_gv:0.2005,qe_gv:0.17,pdc_gv:5.5,ns_gv:40,q_pv:2860,k_pv:0.1914,qe_pv:0.16,pdc_pv:5.0,ns_pv:38},
+  {id:"VT 3422 M",vit:"1350 / 1200",fam:"T3",q_gv:2640,k_gv:0.3315,qe_gv:0.28,pdc_gv:3.9,ns_gv:41,q_pv:2475,k_pv:0.3190,qe_pv:0.27,pdc_pv:3.6,ns_pv:39},
+  {id:"VT 3423 M",vit:"1350 / 1200",fam:"T3",q_gv:2310,k_gv:0.4164,qe_gv:0.35,pdc_gv:3.5,ns_gv:42,q_pv:1980,k_pv:0.3751,qe_pv:0.31,pdc_pv:2.9,ns_pv:40},
+  {id:"VT 4421 M",vit:"1350 / 1050",fam:"T4",q_gv:3575,k_gv:0.2624,qe_gv:0.21,pdc_gv:10.2,ns_gv:40,q_pv:3135,k_pv:0.2432,qe_pv:0.2,pdc_pv:8.9,ns_pv:38},
+  {id:"VT 4422 M",vit:"1350 / 1050",fam:"T4",q_gv:3300,k_gv:0.4486,qe_gv:0.37,pdc_gv:7.7,ns_gv:41,q_pv:2860,k_pv:0.4107,qe_pv:0.34,pdc_pv:6.6,ns_pv:39},
+  {id:"VT 4423 M",vit:"1350 / 1050",fam:"T4",q_gv:3025,k_gv:0.5822,qe_gv:0.48,pdc_gv:7.3,ns_gv:42,q_pv:2640,k_pv:0.5311,qe_pv:0.43,pdc_pv:6.2,ns_pv:40},
+  {id:"VT 4501 M",vit:"1350 / 1050",fam:"T4",q_gv:4200,k_gv:0.2864,qe_gv:0.23,pdc_gv:12.0,ns_gv:43,q_pv:3280,k_pv:0.2500,qe_pv:0.2,pdc_pv:9.4,ns_pv:42},
+  {id:"VT 4502 M",vit:"1350 / 1050",fam:"T4",q_gv:3855,k_gv:0.4932,qe_gv:0.4,pdc_gv:9.2,ns_gv:45,q_pv:3105,k_pv:0.4319,qe_pv:0.35,pdc_pv:7.2,ns_pv:43},
+  {id:"VT 4503 M",vit:"1350 / 1050",fam:"T4",q_gv:3450,k_gv:0.6359,qe_gv:0.52,pdc_gv:8.5,ns_gv:46,q_pv:2875,k_pv:0.5629,qe_pv:0.46,pdc_pv:6.8,ns_pv:45},
+  {id:"VT 5501 M",vit:"1350 / 1050",fam:"T5",q_gv:4560,k_gv:0.3297,qe_gv:0.27,pdc_gv:3.6,ns_gv:43,q_pv:3600,k_pv:0.2871,qe_pv:0.24,pdc_pv:2.8,ns_pv:42},
+  {id:"VT 5502 M",vit:"1350 / 1050",fam:"T5",q_gv:4200,k_gv:0.5635,qe_gv:0.47,pdc_gv:3.0,ns_gv:45,q_pv:3360,k_pv:0.4888,qe_pv:0.41,pdc_pv:2.3,ns_pv:43},
+  {id:"VT 5503 M",vit:"1350 / 1050",fam:"T5",q_gv:3960,k_gv:0.7368,qe_gv:0.61,pdc_gv:2.0,ns_gv:46,q_pv:3240,k_pv:0.6422,qe_pv:0.53,pdc_pv:1.6,ns_pv:45},
+  {id:"VT 5551 M",vit:"1350 / 1050",fam:"T5",q_gv:6060,k_gv:0.3847,qe_gv:0.32,pdc_gv:4.7,ns_gv:44,q_pv:5100,k_pv:0.3501,qe_pv:0.29,pdc_pv:4.0,ns_pv:42},
+  {id:"VT 5552 M",vit:"1350 / 1050",fam:"T5",q_gv:5640,k_gv:0.6686,qe_gv:0.56,pdc_gv:4.1,ns_gv:46,q_pv:4800,k_pv:0.6063,qe_pv:0.51,pdc_pv:3.4,ns_pv:44},
+  {id:"VT 5553 M",vit:"1350 / 1050",fam:"T5",q_gv:5100,k_gv:0.8706,qe_gv:0.72,pdc_gv:2.8,ns_gv:47,q_pv:4380,k_pv:0.7882,qe_pv:0.65,pdc_pv:2.3,ns_pv:45},
+  {id:"VT 6551 M",vit:"1350 / 1150",fam:"T6",q_gv:6300,k_gv:0.3794,qe_gv:0.33,pdc_gv:1.2,ns_gv:44,q_pv:5280,k_pv:0.3425,qe_pv:0.3,pdc_pv:1.0,ns_pv:42},
+  {id:"VT 6552 M",vit:"1350 / 1150",fam:"T6",q_gv:6000,k_gv:0.7819,qe_gv:0.64,pdc_gv:5.9,ns_gv:46,q_pv:5040,k_pv:0.7023,qe_pv:0.58,pdc_pv:4.8,ns_pv:44},
+  {id:"VT 6553 M",vit:"1350 / 1150",fam:"T6",q_gv:5700,k_gv:1.1055,qe_gv:0.9,pdc_gv:13.7,ns_gv:47,q_pv:4920,k_pv:1.0021,qe_pv:0.81,pdc_pv:11.4,ns_pv:45},
+  {id:"VT 6631 M",vit:"900 / 700",fam:"T6",q_gv:9350,k_gv:0.4712,qe_gv:0.41,pdc_gv:1.8,ns_gv:49,q_pv:7700,k_pv:0.4247,qe_pv:0.37,pdc_pv:1.5,ns_pv:47},
+  {id:"VT 6632 M",vit:"900 / 700",fam:"T6",q_gv:7920,k_gv:0.9155,qe_gv:0.75,pdc_gv:7.9,ns_gv:50,q_pv:6600,k_pv:0.8203,qe_pv:0.68,pdc_pv:6.4,ns_pv:48},
+  {id:"VT 6633 M",vit:"900 / 700",fam:"T6",q_gv:7150,k_gv:1.2818,qe_gv:1.04,pdc_gv:18.0,ns_gv:51,q_pv:5800,k_pv:1.1181,qe_pv:0.91,pdc_pv:14.0,ns_pv:49},
+  {id:"VT 7711 T",vit:"900 / 600",fam:"T7",q_gv:14300,k_gv:0.8398,qe_gv:0.69,pdc_gv:7.9,ns_gv:60,q_pv:10100,k_pv:0.6954,qe_pv:0.57,pdc_pv:5.6,ns_pv:55},
+  {id:"VT 7712 T",vit:"900 / 600",fam:"T7",q_gv:13500,k_gv:1.5450,qe_gv:1.27,pdc_gv:10.8,ns_gv:61,q_pv:9500,k_pv:1.2519,qe_pv:1.03,pdc_pv:7.4,ns_pv:56},
+  {id:"VT 7713 T",vit:"900 / 600",fam:"T7",q_gv:10500,k_gv:1.8625,qe_gv:1.52,pdc_gv:10.3,ns_gv:62,q_pv:8300,k_pv:1.5974,qe_pv:1.3,pdc_pv:7.8,ns_pv:57}
+];
+
+function uf(){var f=FL[document.getElementById('fl').value];document.getElementById('tgel_hint').textContent='Point de gel : '+f.tgel+' °C';chk();}
+
+function chk(){
+  var td=parseFloat(document.getElementById('td').value),tr=parseFloat(document.getElementById('tr').value),ta=parseFloat(document.getElementById('ta').value);
+  var eb=document.getElementById('err_bar'),sb=document.getElementById('sum_bar');
+  var msg='';
+  if(isNaN(td)||isNaN(tr)||isNaN(ta))msg='Veuillez saisir des valeurs numériques valides.';
+  else if(td<=tr)msg='La température départ doit être supérieure à la température retour.';
+  else if(ta>=td)msg='La température air doit être inférieure à la température départ fluide.';
+  eb.style.display=msg?'block':'none';eb.textContent=msg;
+  sb.style.display=msg?'none':'flex';
+  if(!msg){
+    var Tm=(td+tr)/2,DTM=Tm-ta;
+    var lm=((td-ta)-(tr-ta))/Math.log((td-ta)/(tr-ta));
+    document.getElementById('s_tm').textContent=Tm.toFixed(1)+' °C';
+    document.getElementById('s_dtm').textContent=DTM.toFixed(1)+' K';
+    document.getElementById('s_dtlm').textContent=lm.toFixed(1)+' K';
+    document.getElementById('s_dtf').textContent=(td-tr)+' K';
+  }
+}
+
+function side(k,q_ref,qe_ref,pdc_ref,td,tr,ta,al,fp){
+  var DTM=(td+tr)/2-ta;
+  var P=101325*Math.pow(1-0.0000226*al,5.255),rho=P/(287*(ta+273.15));
+  var ca=rho/(101325/(287*288.15)); // correction densité pour puissance uniquement
+  var Q=k*DTM*fp.corr*ca;
+  var CA=rho*q_ref/3600*1006;
+  var ts=ta+Q*1000/CA;
+  var qe=Q*1000/(fp.cp*(td-tr));
+  var pdc=pdc_ref*Math.pow(qe/qe_ref,2);
+  return{Q:Q,ts:ts,qe:qe,pdc:pdc,qa:q_ref};
+}
+
+function go(){
+  var td=parseFloat(document.getElementById('td').value),tr=parseFloat(document.getElementById('tr').value),ta=parseFloat(document.getElementById('ta').value);
+  var al=parseFloat(document.getElementById('al').value)||0,flk=document.getElementById('fl').value;
+  if(isNaN(td)||isNaN(tr)||td<=tr||ta>=td){chk();return;}
+  var fp=FL[flk],tbody=document.getElementById('vtbody'),curFam='';
+  tbody.innerHTML='';
+  CAT.forEach(function(v){
+    if(v.fam!==curFam){
+      curFam=v.fam;
+      var s=document.createElement('tr');s.className='fsep';
+      s.innerHTML='<td colspan="14">— Famille '+curFam+' —</td>';
+      tbody.appendChild(s);
+    }
+    var gv=side(v.k_gv,v.q_gv,v.qe_gv,v.pdc_gv,td,tr,ta,al,fp);
+    var pv=side(v.k_pv,v.q_pv,v.qe_pv,v.pdc_pv,td,tr,ta,al,fp);
+    var wg=gv.ts>td-3,wp=pv.ts>td-3;
+    var row=document.createElement('tr');
+    row.innerHTML=
+      '<td class="tdm">'+v.id+'</td>'+
+      '<td class="tdv">'+v.vit+'</td>'+
+      '<td>'+gv.qa.toLocaleString('fr')+'</td>'+
+      '<td class="'+(wg?'wv':'Qv')+'">'+gv.Q.toFixed(1)+'</td>'+
+      '<td class="'+(wg?'wv':'')+'">'+gv.ts.toFixed(1)+'</td>'+
+      '<td>'+gv.qe.toFixed(3)+'</td>'+
+      '<td>'+gv.pdc.toFixed(1)+'</td>'+
+      '<td>'+v.ns_gv+'</td>'+
+      '<td>'+pv.qa.toLocaleString('fr')+'</td>'+
+      '<td class="'+(wp?'wv':'Qv')+'">'+pv.Q.toFixed(1)+'</td>'+
+      '<td class="'+(wp?'wv':'')+'">'+pv.ts.toFixed(1)+'</td>'+
+      '<td>'+pv.qe.toFixed(3)+'</td>'+
+      '<td>'+pv.pdc.toFixed(1)+'</td>'+
+      '<td>'+v.ns_pv+'</td>';
+    tbody.appendChild(row);
+  });
+  var gelW=fp.tgel>=ta-5?' &nbsp;⚠ Attention : T air proche du point de gel du fluide ('+fp.tgel+' °C).':'';
+  document.getElementById('fiche_cond').textContent='Température entrée air : '+ta+' °C  |  Fluide : '+td+'/'+tr+' °C  |  '+fp.name+(al>0?'  |  Altitude : '+al+' m':'')+'  |  Montage standard type U';
+  document.getElementById('fnote').innerHTML='<strong>Méthode :</strong> Modèle calibré sur données fabricant YAHTEC (7 régimes eau × 19 températures air, précision ±3%). Formule : Q = k × (T<sub>moy fluide</sub> − T<sub>air</sub>), avec correction fluide et altitude. Pdc eau recalculée proportionnellement au débit². Niveaux sonores : valeurs constructeur indépendantes des conditions thermiques.'+gelW;
+  document.getElementById('fsec').classList.add('visible');
+  document.getElementById('fsec').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function exportCSV(){
+  var td=document.getElementById('td').value,tr=document.getElementById('tr').value,ta=document.getElementById('ta').value;
+  var fl=FL[document.getElementById('fl').value].name;
+  var lines=[
+    'Calculateur VENTIS — Aérothermes eau chaude',
+    'Conditions;Fluide='+fl+';Tdep='+td+'°C;Tret='+tr+'°C;Tair='+ta+'°C',
+    '',
+    'Type;Vitesse tr/mn;Debit GV m3/h;Puissance GV kW;T soufflage GV °C;Debit eau GV l/s;Pdc eau GV kPa;Nson GV dB(A);Debit PV m3/h;Puissance PV kW;T soufflage PV °C;Debit eau PV l/s;Pdc eau PV kPa;Nson PV dB(A)'
+  ];
+  var rows=document.getElementById('vtbody').querySelectorAll('tr:not(.fsep)');
+  rows.forEach(function(r){
+    var cells=r.querySelectorAll('td');
+    if(cells.length<14)return;
+    var v=[];cells.forEach(function(c){v.push(c.textContent.trim().replace(/\u00a0/g,'').replace(/\s+/g,' '));});
+    lines.push(v.join(';'));
+  });
+  var blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ventis_resultats.csv';a.click();
+}
+
+chk();
+</script>
+</body>
+</html>
