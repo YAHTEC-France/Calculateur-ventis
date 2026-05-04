@@ -172,48 +172,48 @@ tbody tr:hover td{background:#e8f4ff}
 <script>
 var FL={water:{cp:4186,rho:1000,name:"Eau pure",tgel:0,corr:1.0},g20:{cp:4050,rho:1028,name:"Glycol 20%",tgel:-9,corr:0.967},g30:{cp:3910,rho:1040,name:"Glycol 30%",tgel:-16,corr:0.934},g40:{cp:3750,rho:1052,name:"Glycol 40%",tgel:-24,corr:0.896},g50:{cp:3560,rho:1060,name:"Glycol 50%",tgel:-37,corr:0.850}};
 var CAT=[
-  {id:"VT 3311 M",bat:"BAT031",vit:"1350/1050",fam:"T3",q_gv:1900,k_gv:0.1519,qe_gv:0.13,pdc_gv:3.3,ns_gv:39,q_pv:1485,k_pv:0.1310,qe_pv:0.11,pdc_pv:2.6,ns_pv:36},
-  {id:"VT 3312 M",bat:"BAT032",vit:"1350/1050",fam:"T3",q_gv:1815,k_gv:0.2673,qe_gv:0.22,pdc_gv:2.6,ns_gv:39,q_pv:1440,k_pv:0.2295,qe_pv:0.19,pdc_pv:2.0,ns_pv:36},
-  {id:"VT 3313 M",bat:"BAT033",vit:"1350/1050",fam:"T3",q_gv:1700,k_gv:0.3388,qe_gv:0.28,pdc_gv:2.4,ns_gv:39,q_pv:1355,k_pv:0.2884,qe_pv:0.24,pdc_pv:1.8,ns_pv:36},
-  {id:"VT 3421 M",bat:"BAT031",vit:"1350/1200",fam:"T3",q_gv:3135,k_gv:0.2005,qe_gv:0.17,pdc_gv:5.5,ns_gv:40,q_pv:2860,k_pv:0.1914,qe_pv:0.16,pdc_pv:5.0,ns_pv:38},
-  {id:"VT 3422 M",bat:"BAT032",vit:"1350/1200",fam:"T3",q_gv:2640,k_gv:0.3315,qe_gv:0.28,pdc_gv:3.9,ns_gv:41,q_pv:2475,k_pv:0.3190,qe_pv:0.27,pdc_pv:3.6,ns_pv:39},
-  {id:"VT 3423 M",bat:"BAT033",vit:"1350/1200",fam:"T3",q_gv:2310,k_gv:0.4186,qe_gv:0.35,pdc_gv:3.5,ns_gv:42,q_pv:1980,k_pv:0.3733,qe_pv:0.31,pdc_pv:2.9,ns_pv:40},
-  {id:"VT 4422 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3300,k_gv:0.4448,qe_gv:0.37,pdc_gv:7.7,ns_gv:41,q_pv:2860,k_pv:0.4048,qe_pv:0.34,pdc_pv:6.6,ns_pv:39},
-  {id:"VT 4423 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3025,k_gv:0.5724,qe_gv:0.48,pdc_gv:7.3,ns_gv:42,q_pv:2640,k_pv:0.5229,qe_pv:0.43,pdc_pv:6.2,ns_pv:40},
-  {id:"VT 4502 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3855,k_gv:0.4857,qe_gv:0.40,pdc_gv:9.2,ns_gv:45,q_pv:3105,k_pv:0.4257,qe_pv:0.35,pdc_pv:7.2,ns_pv:43},
-  {id:"VT 4503 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3450,k_gv:0.6229,qe_gv:0.52,pdc_gv:8.5,ns_gv:46,q_pv:2875,k_pv:0.5514,qe_pv:0.46,pdc_pv:6.8,ns_pv:45},
-  {id:"VT 5502 M",bat:"BAT052",vit:"1350/1050",fam:"T5",q_gv:4200,k_gv:0.5524,qe_gv:0.47,pdc_gv:3.0,ns_gv:45,q_pv:3360,k_pv:0.4838,qe_pv:0.41,pdc_pv:2.3,ns_pv:43},
-  {id:"VT 5503 M",bat:"BAT053",vit:"1350/1050",fam:"T5",q_gv:3960,k_gv:0.7219,qe_gv:0.61,pdc_gv:2.0,ns_gv:46,q_pv:3240,k_pv:0.6295,qe_pv:0.53,pdc_pv:1.6,ns_pv:45},
-  {id:"VT 5552 M",bat:"BAT052",vit:"1350/1150",fam:"T5",q_gv:5640,k_gv:0.6505,qe_gv:0.56,pdc_gv:4.1,ns_gv:46,q_pv:4800,k_pv:0.5933,qe_pv:0.51,pdc_pv:3.4,ns_pv:44},
-  {id:"VT 5553 M",bat:"BAT053",vit:"1350/1150",fam:"T5",q_gv:5100,k_gv:0.8424,qe_gv:0.72,pdc_gv:2.8,ns_gv:47,q_pv:4380,k_pv:0.7695,qe_pv:0.65,pdc_pv:2.3,ns_pv:45},
-  {id:"VT 6552 M",bat:"BAT062",vit:"1350/1150",fam:"T6",q_gv:6000,k_gv:0.7810,qe_gv:0.64,pdc_gv:5.9,ns_gv:46,q_pv:5040,k_pv:0.7029,qe_pv:0.58,pdc_pv:4.8,ns_pv:44},
-  {id:"VT 6553 M",bat:"BAT063",vit:"1350/1150",fam:"T6",q_gv:5700,k_gv:1.0910,qe_gv:0.90,pdc_gv:13.7,ns_gv:47,q_pv:4920,k_pv:0.9895,qe_pv:0.81,pdc_pv:11.4,ns_pv:45},
-  {id:"VT 6632 M",bat:"BAT062",vit:"900/700",fam:"T6",q_gv:7920,k_gv:0.9086,qe_gv:0.75,pdc_gv:7.9,ns_gv:50,q_pv:6600,k_pv:0.8219,qe_pv:0.68,pdc_pv:6.4,ns_pv:48},
-  {id:"VT 6633 M",bat:"BAT063",vit:"900/700",fam:"T6",q_gv:7150,k_gv:1.2562,qe_gv:1.04,pdc_gv:18.0,ns_gv:51,q_pv:5800,k_pv:1.1076,qe_pv:0.91,pdc_pv:14.0,ns_pv:49},
-  {id:"VT 7712 T",bat:"BAT072",vit:"900/600",fam:"T7",q_gv:13500,k_gv:1.5450,qe_gv:1.27,pdc_gv:10.8,ns_gv:61,q_pv:9500,k_pv:1.2686,qe_pv:1.03,pdc_pv:7.4,ns_pv:56},
-  {id:"VT 7713 T",bat:"BAT073",vit:"900/600",fam:"T7",q_gv:10500,k_gv:1.8157,qe_gv:1.52,pdc_gv:10.3,ns_gv:62,q_pv:8300,k_pv:1.5295,qe_pv:1.30,pdc_pv:7.8,ns_pv:57}
+  {id:"VT 3311 M",bat:"BAT031",vit:"1350/1050",fam:"T3",q_gv:1900,k_gv:0.1565,qe_gv:0.13,pdc_gv:3.3,ns_gv:39,q_pv:1485,k_pv:0.1310,qe_pv:0.11,pdc_pv:2.6,ns_pv:36},
+  {id:"VT 3312 M",bat:"BAT032",vit:"1350/1050",fam:"T3",q_gv:1815,k_gv:0.2753,qe_gv:0.22,pdc_gv:2.6,ns_gv:39,q_pv:1440,k_pv:0.2364,qe_pv:0.19,pdc_pv:2.0,ns_pv:36},
+  {id:"VT 3313 M",bat:"BAT033",vit:"1350/1050",fam:"T3",q_gv:1700,k_gv:0.3771,qe_gv:0.28,pdc_gv:2.4,ns_gv:39,q_pv:1355,k_pv:0.321,qe_pv:0.24,pdc_pv:1.8,ns_pv:36},
+  {id:"VT 3421 M",bat:"BAT031",vit:"1350/1200",fam:"T3",q_gv:3135,k_gv:0.2206,qe_gv:0.17,pdc_gv:5.5,ns_gv:40,q_pv:2860,k_pv:0.2106,qe_pv:0.16,pdc_pv:5.0,ns_pv:38},
+  {id:"VT 3422 M",bat:"BAT032",vit:"1350/1200",fam:"T3",q_gv:2640,k_gv:0.3647,qe_gv:0.28,pdc_gv:3.9,ns_gv:41,q_pv:2475,k_pv:0.3190,qe_pv:0.27,pdc_pv:3.6,ns_pv:39},
+  {id:"VT 3423 M",bat:"BAT033",vit:"1350/1200",fam:"T3",q_gv:2310,k_gv:0.4688,qe_gv:0.35,pdc_gv:3.5,ns_gv:42,q_pv:1980,k_pv:0.4181,qe_pv:0.31,pdc_pv:2.9,ns_pv:40},
+  {id:"VT 4422 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3300,k_gv:0.4755,qe_gv:0.37,pdc_gv:7.7,ns_gv:41,q_pv:2860,k_pv:0.4327,qe_pv:0.34,pdc_pv:6.6,ns_pv:39},
+  {id:"VT 4423 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3025,k_gv:0.6411,qe_gv:0.48,pdc_gv:7.3,ns_gv:42,q_pv:2640,k_pv:0.5857,qe_pv:0.43,pdc_pv:6.2,ns_pv:40},
+  {id:"VT 4502 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3855,k_gv:0.544,qe_gv:0.40,pdc_gv:9.2,ns_gv:45,q_pv:3105,k_pv:0.4768,qe_pv:0.35,pdc_pv:7.2,ns_pv:43},
+  {id:"VT 4503 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3450,k_gv:0.6976,qe_gv:0.52,pdc_gv:8.5,ns_gv:46,q_pv:2875,k_pv:0.6175,qe_pv:0.46,pdc_pv:6.8,ns_pv:45},
+  {id:"VT 5502 M",bat:"BAT052",vit:"1350/1050",fam:"T5",q_gv:4200,k_gv:0.6187,qe_gv:0.47,pdc_gv:3.0,ns_gv:45,q_pv:3360,k_pv:0.5419,qe_pv:0.41,pdc_pv:2.3,ns_pv:43},
+  {id:"VT 5503 M",bat:"BAT053",vit:"1350/1050",fam:"T5",q_gv:3960,k_gv:0.8085,qe_gv:0.61,pdc_gv:2.0,ns_gv:46,q_pv:3240,k_pv:0.705,qe_pv:0.53,pdc_pv:1.6,ns_pv:45},
+  {id:"VT 5552 M",bat:"BAT052",vit:"1350/1150",fam:"T5",q_gv:5640,k_gv:0.7286,qe_gv:0.56,pdc_gv:4.1,ns_gv:46,q_pv:4800,k_pv:0.6645,qe_pv:0.51,pdc_pv:3.4,ns_pv:44},
+  {id:"VT 5553 M",bat:"BAT053",vit:"1350/1150",fam:"T5",q_gv:5100,k_gv:0.9435,qe_gv:0.72,pdc_gv:2.8,ns_gv:47,q_pv:4380,k_pv:0.8619,qe_pv:0.65,pdc_pv:2.3,ns_pv:45},
+  {id:"VT 6552 M",bat:"BAT062",vit:"1350/1150",fam:"T6",q_gv:6000,k_gv:0.7810,qe_gv:0.64,pdc_gv:5.9,ns_gv:46,q_pv:5040,k_pv:0.7872,qe_pv:0.58,pdc_pv:4.8,ns_pv:44},
+  {id:"VT 6553 M",bat:"BAT063",vit:"1350/1150",fam:"T6",q_gv:5700,k_gv:1.0910,qe_gv:0.90,pdc_gv:13.7,ns_gv:47,q_pv:4920,k_pv:1.1082,qe_pv:0.81,pdc_pv:11.4,ns_pv:45},
+  {id:"VT 6632 M",bat:"BAT062",vit:"900/700",fam:"T6",q_gv:7920,k_gv:0.9831,qe_gv:0.75,pdc_gv:7.9,ns_gv:50,q_pv:6600,k_pv:0.8893,qe_pv:0.68,pdc_pv:6.4,ns_pv:48},
+  {id:"VT 6633 M",bat:"BAT063",vit:"900/700",fam:"T6",q_gv:7150,k_gv:1.314,qe_gv:1.04,pdc_gv:18.0,ns_gv:51,q_pv:5800,k_pv:1.1586,qe_pv:0.91,pdc_pv:14.0,ns_pv:49},
+  {id:"VT 7712 T",bat:"BAT072",vit:"900/600",fam:"T7",q_gv:13500,k_gv:1.5450,qe_gv:1.27,pdc_gv:10.8,ns_gv:61,q_pv:9500,k_pv:1.3955,qe_pv:1.03,pdc_pv:7.4,ns_pv:56},
+  {id:"VT 7713 T",bat:"BAT073",vit:"900/600",fam:"T7",q_gv:10500,k_gv:1.9973,qe_gv:1.52,pdc_gv:10.3,ns_gv:62,q_pv:8300,k_pv:1.6825,qe_pv:1.30,pdc_pv:7.8,ns_pv:57}
 ];
 var CAT_EC=[
-  {id:"VT 3311 EC",bat:"BAT031",fam:"T3",fan:"EC350",rpm:1650,k:0.231,q10:2890,q8:2410,q6:1850,q4:1280,q2:700,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:3.3,qe_ref:0.13},
-  {id:"VT 3312 EC",bat:"BAT032",fam:"T3",fan:"EC350",rpm:1650,k:0.4094,q10:2780,q8:2340,q6:1800,q4:1260,q2:690,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.6,qe_ref:0.22},
-  {id:"VT 3313 EC",bat:"BAT033",fam:"T3",fan:"EC350",rpm:1650,k:0.5501,q10:2760,q8:2330,q6:1810,q4:1210,q2:600,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.4,qe_ref:0.28},
-  {id:"VT 3421 EC",bat:"BAT031",fam:"T3",fan:"EC400",rpm:1400,k:0.2545,q10:3980,q8:3920,q6:3940,q4:2960,q2:1670,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:5.5,qe_ref:0.17},
-  {id:"VT 3422 EC",bat:"BAT032",fam:"T3",fan:"EC400",rpm:1400,k:0.4797,q10:3820,q8:3810,q6:3830,q4:2900,q2:1640,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.9,qe_ref:0.28},
-  {id:"VT 3423 EC",bat:"BAT033",fam:"T3",fan:"EC400",rpm:1400,k:0.6469,q10:3570,q8:3530,q6:3520,q4:2660,q2:1540,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.5,qe_ref:0.35},
-  {id:"VT 4422 EC",bat:"BAT042",fam:"T4",fan:"EC400",rpm:1400,k:0.5149,q10:3820,q8:3810,q6:3830,q4:2900,q2:1640,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.7,qe_ref:0.37},
-  {id:"VT 4423 EC",bat:"BAT043",fam:"T4",fan:"EC400",rpm:1400,k:0.6755,q10:3570,q8:3530,q6:3520,q4:2660,q2:1540,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.3,qe_ref:0.48},
-  {id:"VT 4502 EC",bat:"BAT042",fam:"T4",fan:"EC450",rpm:980,k:0.6715,q10:5330,q8:4670,q6:3620,q4:2590,q2:1600,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:9.2,qe_ref:0.4},
-  {id:"VT 4503 EC",bat:"BAT043",fam:"T4",fan:"EC450",rpm:980,k:0.975,q10:5400,q8:4650,q6:3640,q4:2650,q2:1580,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:8.5,qe_ref:0.52},
-  {id:"VT 5502 EC",bat:"BAT052",fam:"T5",fan:"EC450",rpm:980,k:0.701,q10:5330,q8:4670,q6:3620,q4:2590,q2:1600,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.0,qe_ref:0.47},
-  {id:"VT 5503 EC",bat:"BAT053",fam:"T5",fan:"EC450",rpm:980,k:0.9844,q10:5400,q8:4650,q6:3640,q4:2650,q2:1580,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:2.0,qe_ref:0.61},
-  {id:"VT 5552 EC",bat:"BAT052",fam:"T5",fan:"EC550",rpm:1000,k:0.8166,q10:7080,q8:6200,q6:5060,q4:3870,q2:2690,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:4.1,qe_ref:0.56},
-  {id:"VT 5553 EC",bat:"BAT053",fam:"T5",fan:"EC550",rpm:1000,k:1.0208,q10:6180,q8:5420,q6:4430,q4:3420,q2:2260,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:2.8,qe_ref:0.72},
-  {id:"VT 6552 EC",bat:"BAT062",fam:"T6",fan:"EC550",rpm:1000,k:0.9216,q10:7080,q8:6200,q6:5060,q4:3870,q2:2690,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:5.9,qe_ref:0.64},
-  {id:"VT 6553 EC",bat:"BAT063",fam:"T6",fan:"EC550",rpm:1000,k:1.1829,q10:6180,q8:5420,q6:4430,q4:3420,q2:2260,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:13.7,qe_ref:0.9},
-  {id:"VT 6632 EC",bat:"BAT062",fam:"T6",fan:"EC630",rpm:820,k:0.9407,q10:8200,q8:7180,q6:5970,q4:4680,q2:3380,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:7.9,qe_ref:0.75},
-  {id:"VT 6633 EC",bat:"BAT063",fam:"T6",fan:"EC630",rpm:820,k:1.1754,q10:6690,q8:5900,q6:4930,q4:3910,q2:2700,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:18.0,qe_ref:1.04},
-  {id:"VT 7712 EC",bat:"BAT072",fam:"T7",fan:"EC630",rpm:820,k:1.0311,q10:9010,q8:7850,q6:6640,q4:5120,q2:3780,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.8,qe_ref:1.27},
-  {id:"VT 7713 EC",bat:"BAT073",fam:"T7",fan:"EC630",rpm:820,k:1.456,q10:8420,q8:7370,q6:6310,q4:5180,q2:3680,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.3,qe_ref:1.52}
+  {id:"VT 3311 EC",bat:"BAT031",fam:"T3",fan:"EC350",rpm:1650,k:0.2188,q10:2900,q8:2350,q6:1800,q4:1250,q2:730,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:3.3,qe_ref:0.13,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3312 EC",bat:"BAT032",fam:"T3",fan:"EC350",rpm:1650,k:0.3686,q10:2800,q8:2300,q6:1750,q4:1200,q2:700,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.6,qe_ref:0.22,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3313 EC",bat:"BAT033",fam:"T3",fan:"EC350",rpm:1650,k:0.4951,q10:2750,q8:2250,q6:1700,q4:1200,q2:680,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.4,qe_ref:0.28,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3421 EC",bat:"BAT031",fam:"T3",fan:"EC400",rpm:1400,k:0.2253,q10:4000,q8:3200,q6:2400,q4:1650,q2:850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:5.5,qe_ref:0.17,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 3422 EC",bat:"BAT032",fam:"T3",fan:"EC400",rpm:1400,k:0.3893,q10:3800,q8:3050,q6:2300,q4:1550,q2:800,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.9,qe_ref:0.28,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 3423 EC",bat:"BAT033",fam:"T3",fan:"EC400",rpm:1400,k:0.5284,q10:3550,q8:2850,q6:2150,q4:1450,q2:750,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.5,qe_ref:0.35,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4422 EC",bat:"BAT042",fam:"T4",fan:"EC400",rpm:1400,k:0.5429,q10:3800,q8:3050,q6:2300,q4:1550,q2:800,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.7,qe_ref:0.37,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4423 EC",bat:"BAT043",fam:"T4",fan:"EC400",rpm:1400,k:0.7054,q10:3550,q8:2850,q6:2150,q4:1450,q2:750,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.3,qe_ref:0.48,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4502 EC",bat:"BAT042",fam:"T4",fan:"EC450",rpm:980,k:0.5776,q10:5350,q8:4450,q6:3600,q4:2700,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:9.2,qe_ref:0.4,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 4503 EC",bat:"BAT043",fam:"T4",fan:"EC450",rpm:980,k:0.7881,q10:5400,q8:4500,q6:3650,q4:2750,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:8.5,qe_ref:0.52,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5502 EC",bat:"BAT052",fam:"T5",fan:"EC450",rpm:980,k:0.7205,q10:5350,q8:4450,q6:3600,q4:2700,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.0,qe_ref:0.47,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5503 EC",bat:"BAT053",fam:"T5",fan:"EC450",rpm:980,k:0.9591,q10:5400,q8:4500,q6:3650,q4:2750,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:2.0,qe_ref:0.61,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5552 EC",bat:"BAT052",fam:"T5",fan:"EC550",rpm:1000,k:0.7581,q10:7100,q8:5950,q6:4850,q4:3700,q2:2600,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:4.1,qe_ref:0.56,f8:0.913,f6:0.826,f4:0.738,f2:0.651},
+  {id:"VT 5553 EC",bat:"BAT053",fam:"T5",fan:"EC550",rpm:1000,k:0.9939,q10:6200,q8:5200,q6:4250,q4:3250,q2:2250,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:2.8,qe_ref:0.72,f8:0.913,f6:0.826,f4:0.738,f2:0.651},
+  {id:"VT 6552 EC",bat:"BAT062",fam:"T6",fan:"EC550",rpm:1000,k:0.9619,q10:7100,q8:5950,q6:4850,q4:3700,q2:2600,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:5.9,qe_ref:0.64,f8:0.913,f6:0.826,f4:0.738,f2:0.651},
+  {id:"VT 6553 EC",bat:"BAT063",fam:"T6",fan:"EC550",rpm:1000,k:1.2562,q10:6200,q8:5200,q6:4250,q4:3250,q2:2250,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:13.7,qe_ref:0.9,f8:0.913,f6:0.826,f4:0.738,f2:0.651},
+  {id:"VT 6632 EC",bat:"BAT062",fam:"T6",fan:"EC630",rpm:820,k:0.9893,q10:8200,q8:6950,q6:5700,q4:4500,q2:3250,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:7.9,qe_ref:0.75,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 6633 EC",bat:"BAT063",fam:"T6",fan:"EC630",rpm:820,k:1.288,q10:6700,q8:5700,q6:4700,q4:3650,q2:2650,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:18.0,qe_ref:1.04,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 7712 EC",bat:"BAT072",fam:"T7",fan:"EC630",rpm:820,k:1.5508,q10:9000,q8:7650,q6:6300,q4:4900,q2:3550,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.8,qe_ref:1.27,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 7713 EC",bat:"BAT073",fam:"T7",fan:"EC630",rpm:820,k:1.8551,q10:8400,q8:7150,q6:5850,q4:4600,q2:3350,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.3,qe_ref:1.52,f8:0.915,f6:0.831,f4:0.747,f2:0.662}
 ];
 
 var PDC_COEFS={
@@ -268,6 +268,7 @@ function CK(t){
   }
 }
 function SD(k,q,fp,td,tr,ta){
+  // Méthode simple (AC avec débit fixe GV/PV)
   var DTM=(td+tr)/2-ta;
   var P=101325,rho=P/(287*(ta+273.15));
   var Q=k*DTM*fp.corr;
@@ -275,6 +276,43 @@ function SD(k,q,fp,td,tr,ta){
   var ts=ta+Q*1000/CA;
   var qe=Q*1000/(fp.cp*(td-tr));
   return{Q:Q,ts:ts,qe:qe};
+}
+function SD_NTU(k,q10v,q,fp,td,tr,ta,fcorr){
+  if(fcorr===undefined)fcorr=1.0;
+  // Méthode NTU-epsilon correcte pour EC (débit variable par tension)
+  var rho=101325/(287*(ta+273.15)),Cp=1006,dtf=td-tr;
+  var DTM=(td+tr)/2-ta;
+  // Puissance et paramètres à 10V (référence calibration)
+  var Q10=k*DTM*fp.corr;
+  var CA10=rho*q10v/3600*Cp;
+  var qmf10=Q10*1000/(fp.cp*dtf),Cf10=qmf10*fp.cp;
+  var Cmin10=Math.min(CA10,Cf10),Cmax10=Math.max(CA10,Cf10),Cr10=Cmin10/Cmax10;
+  var Qmax10=Cmin10*(td-ta);
+  var eps10=Math.min(Q10*1000/Qmax10,0.97);
+  // NTU à 10V (inverse NTU-eps)
+  var NTU10;
+  if(Cr10<0.01){NTU10=-Math.log(1-eps10);}
+  else{NTU10=Math.log((1-eps10*Cr10)/(1-eps10))/(1-Cr10);}
+  // UA constant pour cette batterie
+  var UA=NTU10*Cmin10;
+  // Calcul itératif à débit q
+  var CA=rho*q/3600*Cp;
+  var Qv=Q10*(q/q10v); // estimation initiale
+  for(var i=0;i<10;i++){
+    var qmf=Qv*1000/(fp.cp*dtf),Cf=qmf*fp.cp;
+    var Cmin=Math.min(CA,Cf),Cmax=Math.max(CA,Cf),Cr=Cmin/Cmax;
+    var NTU=UA/Cmin,eps;
+    if(Cr<0.01){eps=1-Math.exp(-NTU);}
+    else{eps=(1-Math.exp(-NTU*(1-Cr)))/(1-Cr*Math.exp(-NTU*(1-Cr)));}
+    eps=Math.min(eps,0.97);
+    var Qnew=eps*Cmin*(td-ta)/1000;
+    if(Math.abs(Qnew-Qv)<0.001)break;
+    Qv=Qnew;
+  }
+  Qv=Qv*(fcorr||1.0);
+  var ts=ta+Qv*1000/CA;
+  var qe=Qv*1000/(fp.cp*dtf);
+  return{Q:Qv,ts:ts,qe:qe};
 }
 function NS(ns_max,volt){return Math.max(Math.round(ns_max+50*Math.log10(volt/10)),20);}
 function GO(t){
@@ -328,7 +366,8 @@ function GO_EC(td,tr,ta,al,fp,flk){
     var qs={10:v.q10,8:v.q8,6:v.q6,4:v.q4,2:v.q2};
     volts.forEach(function(volt){
       var q=qs[volt];
-      var r=SD(v.k,q,fp,td,tr,ta);
+      var fcorr=volt===10?1.0:(volt===8?v.f8:volt===6?v.f6:volt===4?v.f4:v.f2);
+      var r=SD_NTU(v.k,v.q10,q,fp,td,tr,ta,fcorr);
       r.pdc=calcPdc(v.bat||'BAT032',r.qe);
       r.ns=v['ns'+volt];
       var w=r.ts>td-3;
