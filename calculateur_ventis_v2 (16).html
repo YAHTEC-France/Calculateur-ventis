@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur VENTIS — Aérothermes eau chaude AC & EC</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bd:#0a2540;--bm:#1a4a7a;--bl:#1e6bb8;--blight:#d6eaf8;--bpale:#f0f7ff;
+  --gd:#0a4020;--gm:#1a6a3a;--gl:#1e8a4a;--glight:#c8e8d0;--gpale:#f0faf3;
+  --acc:#e8401c;--tx:#0a2540;--tx2:#4a6080;--tx3:#8aaccc;
+  --bdr:#ccdcec;--bg:#f4f8fc;--wh:#fff;--warn:#c0580a;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px}
+header{background:var(--bd);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(10,37,64,.25)}
+.logo{font-size:15px;font-weight:600;color:#fff;display:flex;align-items:center;gap:10px}
+.bac{background:var(--acc);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.06em}
+.bec{background:var(--gl);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.06em}
+.hsub{font-size:11px;color:var(--tx3);font-family:'DM Mono',monospace}
+.tabs{display:flex;padding:0 32px;background:var(--bd);border-bottom:2px solid rgba(255,255,255,.1)}
+.tab{padding:12px 28px;font-size:14px;font-weight:500;cursor:pointer;color:rgba(255,255,255,.5);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;align-items:center;gap:8px}
+.tab:hover{color:rgba(255,255,255,.8)}
+.tab.aac{color:#fff;border-bottom-color:var(--bl)}
+.tab.aec{color:#fff;border-bottom-color:var(--gl)}
+.tdot{width:8px;height:8px;border-radius:50%}
+main{max-width:1260px;margin:0 auto;padding:28px 24px 60px}
+.tc{display:none}.tc.on{display:block}
+.card{background:var(--wh);border:1px solid var(--bdr);border-radius:var(--rl);padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(10,37,64,.06)}
+.card-ec{border-color:#a8d8b8}
+.ct{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tx2);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.ct::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.ctec::after{background:#a8d8b8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:16px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:11px;font-weight:500;color:var(--tx2);letter-spacing:.03em;text-transform:uppercase}
+.fld input,.fld select{height:40px;padding:0 12px;border:1.5px solid var(--bdr);border-radius:var(--r);background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;width:100%}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--bl);background:var(--wh)}
+.fldec input:focus,.fldec select:focus{border-color:var(--gl)}
+.hint{font-size:11px;color:var(--tx3);font-family:'DM Mono',monospace}
+.sbar{padding:10px 16px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:16px;font-size:12px;border-radius:var(--r);border:1px solid}
+.sbar-ac{background:var(--bpale);border-color:var(--blight);color:var(--tx2)}
+.sbar-ec{background:var(--gpale);border-color:var(--glight);color:var(--tx2)}
+.sbar-ac span{font-weight:600;color:var(--bl)}
+.sbar-ec span{font-weight:600;color:var(--gl)}
+.ebar{background:#fff3f0;border:1px solid #f5b8a8;border-radius:var(--r);padding:10px 16px;color:var(--acc);font-size:13px;font-weight:500;margin-top:12px;display:none}
+.bcalc{margin-top:20px;width:100%;height:48px;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px}
+.bac-c{background:var(--bl)}.bac-c:hover{background:var(--bm)}
+.bec-c{background:var(--gl)}.bec-c:hover{background:var(--gm)}
+.bbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.bs{height:36px;padding:0 16px;background:var(--wh);border:1.5px solid var(--bdr);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--tx);cursor:pointer;display:flex;align-items:center;gap:6px}
+.bs:hover{border-color:var(--bl);background:var(--bpale);color:var(--bl)}
+.bsec:hover{border-color:var(--gl);background:var(--gpale);color:var(--gl)}
+.vsw{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.vb{padding:6px 14px;border:1.5px solid var(--bdr);border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;background:var(--bg);color:var(--tx2)}
+.vb.on{background:var(--gl);border-color:var(--gl);color:#fff}
+.vb:hover:not(.on){border-color:var(--gl);color:var(--gl)}
+.fsec{display:none}.fsec.on{display:block}
+.fhdr{padding:14px 20px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-radius:var(--rl) var(--rl) 0 0}
+.fhdr-ac{background:var(--bd)}.fhdr-ec{background:var(--gd)}
+.fhdr h2{color:#fff;font-size:15px;font-weight:600}
+.fcond{color:rgba(255,255,255,.6);font-size:11px;font-family:'DM Mono',monospace}
+.tw{overflow-x:auto;border:1px solid var(--bdr);border-top:none;border-radius:0 0 var(--rl) var(--rl);box-shadow:0 2px 8px rgba(10,37,64,.07)}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--wh)}
+thead tr.rg th{color:#fff;font-size:11px;font-weight:600;padding:7px 8px;text-align:center;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em}
+.thac{background:var(--bd)}.thgac{background:var(--bm)}.thec{background:var(--gd)}.thgec{background:var(--gm)}
+thead tr.rc th{font-size:10.5px;font-weight:600;padding:6px 8px;text-align:center;border:1px solid var(--bdr);white-space:nowrap;letter-spacing:.02em}
+.rcac{background:var(--blight);color:var(--bd)}.rcec{background:var(--glight);color:var(--gd)}
+tbody tr.sep td{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:none}
+.sepac td{background:var(--bd);color:var(--tx3)}.sepec td{background:var(--gd);color:rgba(255,255,255,.5)}
+tbody tr td{padding:5px 8px;border:1px solid #e8f0f8;text-align:right;color:var(--tx);white-space:nowrap;font-family:'DM Mono',monospace;font-size:11.5px}
+td.nm{text-align:left;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12px}
+td.nmac{color:var(--bd);background:var(--bpale)}
+td.nmec{color:var(--gd);background:var(--gpale)}
+td.vt{text-align:center;font-size:10.5px;color:var(--tx2)}
+td.vtac{background:var(--bpale)}.vtec{background:var(--gpale)}
+tbody tr:nth-child(even) td:not([class]){background:#f8fbff}
+tbody tr:hover td{background:#e8f4ff}
+.Qac{font-weight:700;color:var(--bl)}.Qec{font-weight:700;color:var(--gl)}.wv{color:var(--warn);font-weight:600}
+.note{font-size:11px;color:var(--tx2);margin-top:12px;padding:10px 14px;background:var(--wh);border-radius:0 var(--r) var(--r) 0;line-height:1.7}
+.nac{border:1px solid var(--bdr);border-left:3px solid var(--bl)}
+.nec{border:1px solid #a8d8b8;border-left:3px solid var(--gl)}
+#tblec td,#tblec th{padding:3px 5px;font-size:10.5px}
+#tblec td.nm{font-size:11px}
+#tblec td.vt{font-size:9.5px;line-height:1.3}
+#tblec thead tr.rc th{padding:4px 4px;font-size:9.5px;white-space:nowrap}
+#tblec thead tr.rg th{padding:5px 4px;font-size:10px}
+.tw{overflow-x:auto}
+@media print{
+  header,.tabs,.card,.card-ec,.bcalc,.bbar,.vsw{display:none!important}
+  body{background:#fff;font-size:10px}main{padding:0;max-width:100%}
+  .tc{display:block!important}.fsec{display:block!important}
+  .tw{border:1px solid #ccc;box-shadow:none}table{font-size:9px}.note{display:none}
+}
+</style></head>
+<body>
+<header>
+  <div class="logo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#1e6bb8"/><path d="M5 16L11 6L17 16" stroke="#fff" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 12L14 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Calculateur VENTIS <span class="bac">AC</span><span class="bec">EC</span>
+  </div>
+  <div class="hsub">v2.0 — Autonome, sans internet</div>
+</header>
+<div class="tabs">
+  <div class="tab aac" id="tac" onclick="ST('ac')"><div class="tdot" style="background:var(--bl)"></div>Moteur AC — 2 vitesses</div>
+  <div class="tab" id="tec" onclick="ST('ec')"><div class="tdot" style="background:var(--gl)"></div>Moteur EC — 5 tensions (2V→10V)</div>
+</div>
+<main>
+
+<!-- ===== AC ===== -->
+<div class="tc on" id="cac">
+<div class="card">
+  <div class="ct">Conditions — Moteur AC</div>
+  <div class="grid">
+    <div class="fld"><label>Fluide</label><select id="flac" onchange="UF('ac')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgac">0 °C</div></div>
+    <div class="fld"><label>T départ</label><input type="number" id="tdac" value="67" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label>T retour</label><input type="number" id="trac" value="47" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label>T air entrée</label><input type="number" id="taac" value="15" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label>Altitude</label><input type="number" id="alac" value="0" step="100" min="0" oninput="CK('ac')"><div class="hint">m</div></div>
+  </div>
+  <div class="ebar" id="eac"></div>
+  <div class="sbar sbar-ac" id="sac">T moy : <span id="tm_ac">—</span> &nbsp;|&nbsp; DTM : <span id="dtm_ac">—</span> &nbsp;|&nbsp; DTLM : <span id="dtlm_ac">—</span> &nbsp;|&nbsp; ΔT fluide : <span id="dtf_ac">—</span></div>
+  <button class="bcalc bac-c" onclick="GO('ac')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Générer fiche AC</button>
+</div>
+<div class="fsec" id="fsac">
+  <div class="bbar"><button class="bs" onclick="window.print()">🖨 Imprimer</button><button class="bs" onclick="EX('ac')">⬇ CSV</button></div>
+  <div class="fhdr fhdr-ac"><h2>Aérotherme eau chaude VENTIS — Moteur AC</h2><div class="fcond" id="condac"></div></div>
+  <div class="tw"><table style="min-width:920px"><thead>
+    <tr class="rg"><th class="thac" rowspan="2" style="text-align:left;padding-left:12px;min-width:110px">Type</th><th class="thac" rowspan="2">Vitesse tr/mn</th><th class="thgac" colspan="6">Grande vitesse</th><th class="thgac" colspan="6">Petite vitesse</th></tr>
+    <tr class="rc"><th class="rcac">Débit m³/h</th><th class="rcac">Puiss. kW</th><th class="rcac">T° souffl. °C</th><th class="rcac">Débit eau l/s</th><th class="rcac">Pdc kPa</th><th class="rcac">Nson dB(A)</th><th class="rcac">Débit m³/h</th><th class="rcac">Puiss. kW</th><th class="rcac">T° souffl. °C</th><th class="rcac">Débit eau l/s</th><th class="rcac">Pdc kPa</th><th class="rcac">Nson dB(A)</th></tr>
+  </thead><tbody id="bac"></tbody></table></div>
+  <div class="note nac" id="nac"></div>
+</div>
+</div>
+
+<!-- ===== EC ===== -->
+<div class="tc" id="cec">
+<div class="card card-ec">
+  <div class="ct ctec">Conditions — Moteur EC (brushless, commande 0-10V)</div>
+  <div class="grid">
+    <div class="fld fldec"><label>Fluide</label><select id="flec" onchange="UF('ec')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgec">0 °C</div></div>
+    <div class="fld fldec"><label>T départ</label><input type="number" id="tdec" value="67" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label>T retour</label><input type="number" id="trec" value="47" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label>T air entrée</label><input type="number" id="taec" value="15" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label>Altitude</label><input type="number" id="alec" value="0" step="100" min="0" oninput="CK('ec')"><div class="hint">m</div></div>
+  </div>
+  <div style="margin-top:14px">
+    <div style="font-size:11px;font-weight:500;color:var(--tx2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Tension de commande VSP affichée dans le tableau</div>
+    <div class="vsw">
+      <button class="vb on" id="vb10" onclick="SV(10)">10 V — 100%</button>
+      <button class="vb" id="vb8" onclick="SV(8)">8 V — ~80%</button>
+      <button class="vb" id="vb6" onclick="SV(6)">6 V — ~60%</button>
+      <button class="vb" id="vb4" onclick="SV(4)">4 V — ~40%</button>
+      <button class="vb" id="vb2" onclick="SV(2)">2 V — ~20%</button>
+    </div>
+  </div>
+  <div class="ebar" id="eec"></div>
+  <div class="sbar sbar-ec" id="sec">T moy : <span id="tm_ec">—</span> &nbsp;|&nbsp; DTM : <span id="dtm_ec">—</span> &nbsp;|&nbsp; DTLM : <span id="dtlm_ec">—</span> &nbsp;|&nbsp; ΔT fluide : <span id="dtf_ec">—</span></div>
+  <button class="bcalc bec-c" onclick="GO('ec')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Générer fiche EC</button>
+</div>
+<div class="fsec" id="fsec">
+  <div class="bbar"><button class="bs bsec" onclick="window.print()">🖨 Imprimer</button><button class="bs bsec" onclick="EX('ec')">⬇ CSV</button></div>
+  <div class="fhdr fhdr-ec"><h2>Aérotherme eau chaude VENTIS — Moteur EC</h2><div class="fcond" id="condec"></div></div>
+  <div class="tw"><table id="tblec" style="min-width:100%;width:100%"><thead id="headec"></thead><tbody id="bec"></tbody></table></div>
+  <div class="note nec" id="nec"></div>
+</div>
+</div>
+
+</main>
+<script>
+var FL={water:{cp:4186,rho:1000,name:"Eau pure",tgel:0,corr:1.0},g20:{cp:4050,rho:1028,name:"Glycol 20%",tgel:-9,corr:0.967},g30:{cp:3910,rho:1040,name:"Glycol 30%",tgel:-16,corr:0.934},g40:{cp:3750,rho:1052,name:"Glycol 40%",tgel:-24,corr:0.896},g50:{cp:3560,rho:1060,name:"Glycol 50%",tgel:-37,corr:0.850}};
+var CAT=[
+  {id:"VT 3311 M",bat:"BAT031",vit:"1350/1050",fam:"T3",q_gv:1900,k_gv:0.1565,qe_gv:0.13,pdc_gv:3.3,ns_gv:39,q_pv:1485,k_pv:0.1310,qe_pv:0.11,pdc_pv:2.6,ns_pv:36},
+  {id:"VT 3312 M",bat:"BAT032",vit:"1350/1050",fam:"T3",q_gv:1815,k_gv:0.2753,qe_gv:0.22,pdc_gv:2.6,ns_gv:39,q_pv:1440,k_pv:0.2364,qe_pv:0.19,pdc_pv:2.0,ns_pv:36},
+  {id:"VT 3313 M",bat:"BAT033",vit:"1350/1050",fam:"T3",q_gv:1700,k_gv:0.3771,qe_gv:0.28,pdc_gv:2.4,ns_gv:39,q_pv:1355,k_pv:0.321,qe_pv:0.24,pdc_pv:1.8,ns_pv:36},
+  {id:"VT 3421 M",bat:"BAT031",vit:"1350/1200",fam:"T3",q_gv:3135,k_gv:0.2206,qe_gv:0.17,pdc_gv:5.5,ns_gv:40,q_pv:2860,k_pv:0.2106,qe_pv:0.16,pdc_pv:5.0,ns_pv:38},
+  {id:"VT 3422 M",bat:"BAT032",vit:"1350/1200",fam:"T3",q_gv:2640,k_gv:0.3647,qe_gv:0.28,pdc_gv:3.9,ns_gv:41,q_pv:2475,k_pv:0.3190,qe_pv:0.27,pdc_pv:3.6,ns_pv:39},
+  {id:"VT 3423 M",bat:"BAT033",vit:"1350/1200",fam:"T3",q_gv:2310,k_gv:0.4688,qe_gv:0.35,pdc_gv:3.5,ns_gv:42,q_pv:1980,k_pv:0.4181,qe_pv:0.31,pdc_pv:2.9,ns_pv:40},
+  {id:"VT 4422 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3300,k_gv:0.4755,qe_gv:0.37,pdc_gv:7.7,ns_gv:41,q_pv:2860,k_pv:0.4327,qe_pv:0.34,pdc_pv:6.6,ns_pv:39},
+  {id:"VT 4423 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3025,k_gv:0.6411,qe_gv:0.48,pdc_gv:7.3,ns_gv:42,q_pv:2640,k_pv:0.5857,qe_pv:0.43,pdc_pv:6.2,ns_pv:40},
+  {id:"VT 4502 M",bat:"BAT042",vit:"1350/1050",fam:"T4",q_gv:3855,k_gv:0.544,qe_gv:0.40,pdc_gv:9.2,ns_gv:45,q_pv:3105,k_pv:0.4768,qe_pv:0.35,pdc_pv:7.2,ns_pv:43},
+  {id:"VT 4503 M",bat:"BAT043",vit:"1350/1050",fam:"T4",q_gv:3450,k_gv:0.6976,qe_gv:0.52,pdc_gv:8.5,ns_gv:46,q_pv:2875,k_pv:0.6175,qe_pv:0.46,pdc_pv:6.8,ns_pv:45},
+  {id:"VT 5502 M",bat:"BAT052",vit:"1350/1050",fam:"T5",q_gv:4200,k_gv:0.6187,qe_gv:0.47,pdc_gv:3.0,ns_gv:45,q_pv:3360,k_pv:0.5419,qe_pv:0.41,pdc_pv:2.3,ns_pv:43},
+  {id:"VT 5503 M",bat:"BAT053",vit:"1350/1050",fam:"T5",q_gv:3960,k_gv:0.8085,qe_gv:0.61,pdc_gv:2.0,ns_gv:46,q_pv:3240,k_pv:0.705,qe_pv:0.53,pdc_pv:1.6,ns_pv:45},
+  {id:"VT 5552 M",bat:"BAT052",vit:"1350/1150",fam:"T5",q_gv:5640,k_gv:0.7286,qe_gv:0.56,pdc_gv:4.1,ns_gv:46,q_pv:4800,k_pv:0.6645,qe_pv:0.51,pdc_pv:3.4,ns_pv:44},
+  {id:"VT 5553 M",bat:"BAT053",vit:"1350/1150",fam:"T5",q_gv:5100,k_gv:0.9435,qe_gv:0.72,pdc_gv:2.8,ns_gv:47,q_pv:4380,k_pv:0.8331,qe_pv:0.65,pdc_pv:2.3,ns_pv:45},
+  {id:"VT 6552 M",bat:"BAT062",vit:"1350/1150",fam:"T6",q_gv:6000,k_gv:0.87470,qe_gv:0.64,pdc_gv:5.9,ns_gv:46,q_pv:5040,k_pv:0.8393,qe_pv:0.58,pdc_pv:4.8,ns_pv:44},
+  {id:"VT 6553 M",bat:"BAT063",vit:"1350/1150",fam:"T6",q_gv:5700,k_gv:1.22190,qe_gv:0.90,pdc_gv:13.7,ns_gv:47,q_pv:4920,k_pv:1.1082,qe_pv:0.81,pdc_pv:11.4,ns_pv:45},
+  {id:"VT 6632 M",bat:"BAT062",vit:"900/700",fam:"T6",q_gv:7920,k_gv:0.9831,qe_gv:0.75,pdc_gv:7.9,ns_gv:50,q_pv:6600,k_pv:0.8893,qe_pv:0.68,pdc_pv:6.4,ns_pv:48},
+  {id:"VT 6633 M",bat:"BAT063",vit:"900/700",fam:"T6",q_gv:7150,k_gv:1.314,qe_gv:1.04,pdc_gv:18.0,ns_gv:51,q_pv:5800,k_pv:1.1586,qe_pv:0.91,pdc_pv:14.0,ns_pv:49},
+  {id:"VT 7712 T",bat:"BAT072",vit:"900/600",fam:"T7",q_gv:13500,k_gv:1.69950,qe_gv:1.27,pdc_gv:10.8,ns_gv:61,q_pv:9500,k_pv:1.3955,qe_pv:1.03,pdc_pv:7.4,ns_pv:56},
+  {id:"VT 7713 T",bat:"BAT073",vit:"900/600",fam:"T7",q_gv:10500,k_gv:2.0308,qe_gv:1.52,pdc_gv:10.3,ns_gv:62,q_pv:8300,k_pv:1.6675,qe_pv:1.30,pdc_pv:7.8,ns_pv:57}
+];
+var CAT_EC=[
+  {id:"VT 3311 EC",bat:"BAT031",fam:"T3",fan:"EC350",rpm:1650,k:0.1914,q10:2900,q8:2350,q6:1800,q4:1250,q2:730,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:3.3,qe_ref:0.13,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3312 EC",bat:"BAT032",fam:"T3",fan:"EC350",rpm:1650,k:0.335,q10:2800,q8:2300,q6:1750,q4:1200,q2:700,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.6,qe_ref:0.22,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3313 EC",bat:"BAT033",fam:"T3",fan:"EC350",rpm:1650,k:0.4662,q10:2750,q8:2250,q6:1700,q4:1200,q2:680,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:2.4,qe_ref:0.28,f8:0.922,f6:0.845,f4:0.767,f2:0.69},
+  {id:"VT 3421 EC",bat:"BAT031",fam:"T3",fan:"EC400",rpm:1400,k:0.1963,q10:4000,q8:3200,q6:2400,q4:1650,q2:850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:5.5,qe_ref:0.17,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 3422 EC",bat:"BAT032",fam:"T3",fan:"EC400",rpm:1400,k:0.3511,q10:3800,q8:3050,q6:2300,q4:1550,q2:800,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.9,qe_ref:0.28,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 3423 EC",bat:"BAT033",fam:"T3",fan:"EC400",rpm:1400,k:0.4953,q10:3550,q8:2850,q6:2150,q4:1450,q2:750,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.5,qe_ref:0.35,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4422 EC",bat:"BAT042",fam:"T4",fan:"EC400",rpm:1400,k:0.5163,q10:3800,q8:3050,q6:2300,q4:1550,q2:800,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.7,qe_ref:0.37,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4423 EC",bat:"BAT043",fam:"T4",fan:"EC400",rpm:1400,k:0.6899,q10:3550,q8:2850,q6:2150,q4:1450,q2:750,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:7.3,qe_ref:0.48,f8:0.916,f6:0.833,f4:0.75,f2:0.666},
+  {id:"VT 4502 EC",bat:"BAT042",fam:"T4",fan:"EC450",rpm:980,k:0.5482,q10:5350,q8:4450,q6:3600,q4:2700,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:9.2,qe_ref:0.4,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 4503 EC",bat:"BAT043",fam:"T4",fan:"EC450",rpm:980,k:0.77,q10:5400,q8:4500,q6:3650,q4:2750,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:8.5,qe_ref:0.52,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5502 EC",bat:"BAT052",fam:"T5",fan:"EC450",rpm:980,k:0.6858,q10:5350,q8:4450,q6:3600,q4:2700,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:3.0,qe_ref:0.47,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5503 EC",bat:"BAT053",fam:"T5",fan:"EC450",rpm:980,k:0.9227,q10:5400,q8:4500,q6:3650,q4:2750,q2:1850,ns10:56,ns8:52,ns6:48,ns4:42,ns2:35,pdc_ref:2.0,qe_ref:0.61,f8:0.883,f6:0.766,f4:0.648,f2:0.531},
+  {id:"VT 5552 EC",bat:"BAT052",fam:"T5",fan:"EC550",rpm:1000,k:0.7193,q10:7100,q8:5950,q6:4850,q4:3700,q2:2600,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:4.1,qe_ref:0.56,f8:0.917,f6:0.835,f4:0.753,f2:0.67},
+  {id:"VT 5553 EC",bat:"BAT053",fam:"T5",fan:"EC550",rpm:1000,k:0.9554,q10:6200,q8:5200,q6:4250,q4:3250,q2:2250,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:2.8,qe_ref:0.72,f8:0.917,f6:0.835,f4:0.753,f2:0.67},
+  {id:"VT 6552 EC",bat:"BAT062",fam:"T6",fan:"EC550",rpm:1000,k:0.9342,q10:7100,q8:5950,q6:4850,q4:3700,q2:2600,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:5.9,qe_ref:0.64,f8:0.917,f6:0.835,f4:0.753,f2:0.67},
+  {id:"VT 6553 EC",bat:"BAT063",fam:"T6",fan:"EC550",rpm:1000,k:1.2573,q10:6200,q8:5200,q6:4250,q4:3250,q2:2250,ns10:55,ns8:51,ns6:47,ns4:41,ns2:34,pdc_ref:13.7,qe_ref:0.9,f8:0.917,f6:0.835,f4:0.753,f2:0.67},
+  {id:"VT 6632 EC",bat:"BAT062",fam:"T6",fan:"EC630",rpm:820,k:0.9594,q10:8200,q8:6950,q6:5700,q4:4500,q2:3250,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:7.9,qe_ref:0.75,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 6633 EC",bat:"BAT063",fam:"T6",fan:"EC630",rpm:820,k:1.2888,q10:6700,q8:5700,q6:4700,q4:3650,q2:2650,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:18.0,qe_ref:1.04,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 7712 EC",bat:"BAT072",fam:"T7",fan:"EC630",rpm:820,k:1.5503,q10:9000,q8:7650,q6:6300,q4:4900,q2:3550,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.8,qe_ref:1.27,f8:0.915,f6:0.831,f4:0.747,f2:0.662},
+  {id:"VT 7713 EC",bat:"BAT073",fam:"T7",fan:"EC630",rpm:820,k:1.8525,q10:8400,q8:7150,q6:5850,q4:4600,q2:3350,ns10:54,ns8:50,ns6:46,ns4:40,ns2:33,pdc_ref:10.3,qe_ref:1.52,f8:0.915,f6:0.831,f4:0.747,f2:0.662}
+];
+
+var PDC_COEFS={
+  "BAT031":{R:60.6804,n:1.427},
+  "BAT032":{R:39.0648,n:1.790},"BAT033":{R:25.8194,n:1.866},
+  "BAT042":{R:47.1707,n:1.823},"BAT043":{R:21.7072,n:1.485},
+  "BAT052":{R:13.0330,n:1.945},"BAT053":{R:5.2668,n:1.923},
+  "BAT062":{R:15.0353,n:2.096},"BAT063":{R:16.4640,n:1.744},
+  "BAT072":{R:7.0155,n:1.805},"BAT073":{R:4.8919,n:1.778}
+};
+function calcPdc(bat,qe_ls){
+  var c=PDC_COEFS[bat];
+  if(!c||qe_ls<=0)return 0;
+  return c.R*Math.pow(qe_ls,c.n);
+}
+
+var CV=10;
+function ST(t){
+  document.getElementById('cac').classList.toggle('on',t==='ac');
+  document.getElementById('cec').classList.toggle('on',t==='ec');
+  document.getElementById('tac').className='tab'+(t==='ac'?' aac':'');
+  document.getElementById('tec').className='tab'+(t==='ec'?' aec':'');
+}
+function SV(v){
+  CV=v;
+  [10,8,6,4,2].forEach(function(x){var el=document.getElementById('vb'+x);if(el)el.classList.toggle('on',x===v);});
+  // Re-générer le tableau si déjà affiché
+  if(document.getElementById('fsec').classList.contains('on')){GO('ec');}
+}
+function UF(t){
+  var f=FL[document.getElementById('fl'+t).value];
+  document.getElementById('tg'+t).textContent='Point de gel : '+f.tgel+' °C';
+  CK(t);
+}
+function CK(t){
+  var td=parseFloat(document.getElementById('td'+t).value);
+  var tr=parseFloat(document.getElementById('tr'+t).value);
+  var ta=parseFloat(document.getElementById('ta'+t).value);
+  var eb=document.getElementById('e'+t),sb=document.getElementById('s'+t);
+  var msg='';
+  if(isNaN(td)||isNaN(tr)||isNaN(ta))msg='Valeurs invalides.';
+  else if(td<=tr)msg='T départ doit être > T retour.';
+  else if(ta>=td)msg='T air doit être < T départ.';
+  eb.style.display=msg?'block':'none';eb.textContent=msg;
+  sb.style.display=msg?'none':'flex';
+  if(!msg){
+    var lm=((td-ta)-(tr-ta))/Math.log((td-ta)/(tr-ta));
+    document.getElementById('tm_'+t).textContent=((td+tr)/2).toFixed(1)+' °C';
+    document.getElementById('dtm_'+t).textContent=((td+tr)/2-ta).toFixed(1)+' K';
+    document.getElementById('dtlm_'+t).textContent=lm.toFixed(1)+' K';
+    document.getElementById('dtf_'+t).textContent=(td-tr)+' K';
+  }
+}
+function SD(k,q,fp,td,tr,ta){
+  // Méthode simple (AC avec débit fixe GV/PV)
+  var DTM=(td+tr)/2-ta;
+  var P=101325,rho=P/(287*(ta+273.15));
+  var Q=k*DTM*fp.corr;
+  var CA=rho*q/3600*1006;
+  var ts=ta+Q*1000/CA;
+  var qe=Q*1000/(fp.cp*(td-tr));
+  return{Q:Q,ts:ts,qe:qe};
+}
+function SD_NTU(k,q10v,q,fp,td,tr,ta,fcorr){
+  if(fcorr===undefined)fcorr=1.0;
+  // Méthode NTU-epsilon correcte pour EC (débit variable par tension)
+  var rho=101325/(287*(ta+273.15)),Cp=1006,dtf=td-tr;
+  var DTM=(td+tr)/2-ta;
+  // Puissance et paramètres à 10V (référence calibration)
+  var Q10=k*DTM*fp.corr;
+  var CA10=rho*q10v/3600*Cp;
+  var qmf10=Q10*1000/(fp.cp*dtf),Cf10=qmf10*fp.cp;
+  var Cmin10=Math.min(CA10,Cf10),Cmax10=Math.max(CA10,Cf10),Cr10=Cmin10/Cmax10;
+  var Qmax10=Cmin10*(td-ta);
+  var eps10=Math.min(Q10*1000/Qmax10,0.97);
+  // NTU à 10V (inverse NTU-eps)
+  var NTU10;
+  if(Cr10<0.01){NTU10=-Math.log(1-eps10);}
+  else{NTU10=Math.log((1-eps10*Cr10)/(1-eps10))/(1-Cr10);}
+  // UA constant pour cette batterie
+  var UA=NTU10*Cmin10;
+  // Calcul itératif à débit q
+  var CA=rho*q/3600*Cp;
+  var Qv=Q10*(q/q10v); // estimation initiale
+  for(var i=0;i<10;i++){
+    var qmf=Qv*1000/(fp.cp*dtf),Cf=qmf*fp.cp;
+    var Cmin=Math.min(CA,Cf),Cmax=Math.max(CA,Cf),Cr=Cmin/Cmax;
+    var NTU=UA/Cmin,eps;
+    if(Cr<0.01){eps=1-Math.exp(-NTU);}
+    else{eps=(1-Math.exp(-NTU*(1-Cr)))/(1-Cr*Math.exp(-NTU*(1-Cr)));}
+    eps=Math.min(eps,0.97);
+    var Qnew=eps*Cmin*(td-ta)/1000;
+    if(Math.abs(Qnew-Qv)<0.001)break;
+    Qv=Qnew;
+  }
+  Qv=Qv*(fcorr||1.0);
+  var ts=ta+Qv*1000/CA;
+  var qe=Qv*1000/(fp.cp*dtf);
+  return{Q:Qv,ts:ts,qe:qe};
+}
+function NS(ns_max,volt){return Math.max(Math.round(ns_max+50*Math.log10(volt/10)),20);}
+function GO(t){
+  var td=parseFloat(document.getElementById('td'+t).value);
+  var tr=parseFloat(document.getElementById('tr'+t).value);
+  var ta=parseFloat(document.getElementById('ta'+t).value);
+  var al=parseFloat(document.getElementById('al'+t).value)||0;
+  var flk=document.getElementById('fl'+t).value;
+  if(isNaN(td)||isNaN(tr)||td<=tr||ta>=td){CK(t);return;}
+  var fp=FL[flk];
+  if(t==='ac') GO_AC(td,tr,ta,al,fp,flk);
+  else GO_EC(td,tr,ta,al,fp,flk);
+}
+
+function GO_AC(td,tr,ta,al,fp,flk){
+  var tbody=document.getElementById('bac'),cf='';
+  tbody.innerHTML='';
+  CAT.forEach(function(v){
+    if(v.fam!==cf){cf=v.fam;var s=document.createElement('tr');s.className='sep sepac';s.innerHTML='<td colspan="14">— Famille '+v.fam+' —</td>';tbody.appendChild(s);}
+    var gv=SD(v.k_gv,v.q_gv,fp,td,tr,ta),pv=SD(v.k_pv,v.q_pv,fp,td,tr,ta);
+    var pdc_gv=calcPdc(v.bat||'BAT032',gv.qe);
+    var pdc_pv=calcPdc(v.bat||'BAT032',pv.qe);
+    var wg=gv.ts>td-3,wp=pv.ts>td-3;
+    var row=document.createElement('tr');
+    row.innerHTML='<td class="nm nmac">'+v.id+'</td><td class="vt vtac">'+v.vit+'</td>'+
+      '<td>'+v.q_gv.toLocaleString('fr')+'</td><td class="'+(wg?'wv':'Qac')+'">'+gv.Q.toFixed(1)+'</td><td class="'+(wg?'wv':'')+'">'+gv.ts.toFixed(1)+'</td><td>'+gv.qe.toFixed(3)+'</td><td>'+pdc_gv.toFixed(1)+'</td><td>'+v.ns_gv+'</td>'+
+      '<td>'+v.q_pv.toLocaleString('fr')+'</td><td class="'+(wp?'wv':'Qac')+'">'+pv.Q.toFixed(1)+'</td><td class="'+(wp?'wv':'')+'">'+pv.ts.toFixed(1)+'</td><td>'+pv.qe.toFixed(3)+'</td><td>'+pdc_pv.toFixed(1)+'</td><td>'+v.ns_pv+'</td>';
+    tbody.appendChild(row);
+  });
+  document.getElementById('condac').textContent='T entrée air : '+ta+' °C  |  Fluide : '+td+'/'+tr+' °C  |  '+fp.name+(al>0?'  |  Alt. '+al+' m':'')+'  |  Montage standard type U';
+  document.getElementById('nac').innerHTML='<strong>Méthode :</strong> Modèle calibré sur données YAHTEC (±3%). Pdc eau calculée par courbe hydraulique R×Q<sup>n</sup> calibrée. <strong>Nson :</strong> Lp à 5m en montage mural — valeurs YAHTEC directes (mesure normalisée, atténuation 22 dB appliquée par le fabricant).';
+  document.getElementById('fsac').classList.add('on');
+  document.getElementById('fsac').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function GO_EC(td,tr,ta,al,fp,flk){
+  var volts=[CV];
+  var thead=document.getElementById('headec'),tbody=document.getElementById('bec'),cf='';
+  // En-tête dynamique
+  var h='<tr class="rg"><th class="thec" rowspan="2" style="text-align:left;padding-left:12px;min-width:110px">Type</th><th class="thec" rowspan="2">Ventilateur</th>';
+  volts.forEach(function(v){h+='<th class="thgec" colspan="6">'+v+'V — '+(v===10?'100%':v===8?'~80%':v===6?'~60%':v===4?'~40%':'~20%')+'</th>';});
+  h+='</tr><tr class="rc">';
+  volts.forEach(function(){h+='<th class="rcec">Débit m³/h</th><th class="rcec">Puiss. kW</th><th class="rcec">T° souffl. °C</th><th class="rcec">Débit eau l/s</th><th class="rcec">Pdc kPa</th><th class="rcec">Nson dB(A)</th>';});
+  h+='</tr>';
+  thead.innerHTML=h;
+  tbody.innerHTML='';
+  CAT_EC.forEach(function(v){
+    if(v.fam!==cf){cf=v.fam;var s=document.createElement('tr');s.className='sep sepec';s.innerHTML='<td colspan="'+(2+volts.length*6)+'">— Famille '+v.fam+' EC —</td>';tbody.appendChild(s);}
+    var row=document.createElement('tr');
+    var cells='<td class="nm nmec">'+v.id+'</td><td class="vt vtec" style="font-size:10px">'+v.fan+'<br>'+v.rpm+' tr/mn</td>';
+    var qs={10:v.q10,8:v.q8,6:v.q6,4:v.q4,2:v.q2};
+    volts.forEach(function(volt){
+      var q=qs[volt];
+      var fcorr=volt===10?1.0:(volt===8?v.f8:volt===6?v.f6:volt===4?v.f4:v.f2);
+      var r=SD_NTU(v.k,v.q10,q,fp,td,tr,ta,fcorr);
+      r.pdc=calcPdc(v.bat||'BAT032',r.qe);
+      r.ns=v['ns'+volt];
+      var w=r.ts>td-3;
+      cells+='<td>'+q.toLocaleString('fr')+'</td><td class="'+(w?'wv':'Qec')+'">'+r.Q.toFixed(1)+'</td><td class="'+(w?'wv':'')+'">'+r.ts.toFixed(1)+'</td><td>'+r.qe.toFixed(3)+'</td><td>'+r.pdc.toFixed(1)+'</td><td>'+r.ns+'</td>';
+    });
+    row.innerHTML=cells;tbody.appendChild(row);
+  });
+  document.getElementById('condec').textContent='T entrée air : '+ta+' °C  |  Fluide : '+td+'/'+tr+' °C  |  '+fp.name+(al>0?'  |  Alt. '+al+' m':'')+'  |  Commande 0-10V';
+  document.getElementById('nec').innerHTML='<strong>Méthode :</strong> Débits EC Weiguang (loi linéaire 0-10V). Débits réels mesurés (batterie montée). Thermique recalibrée sur ces débits réels. D550 extrapolé. Nson calculé par loi acoustique (−4 dB/−20% vitesse).';
+  document.getElementById('fsec').classList.add('on');
+  document.getElementById('fsec').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function EX(t){
+  var rows=document.getElementById('b'+t).querySelectorAll('tr:not(.sep)');
+  var lines=['Calculateur VENTIS '+t.toUpperCase()];
+  rows.forEach(function(r){var c=r.querySelectorAll('td');var v=[];c.forEach(function(x){v.push(x.textContent.trim().replace(/\s+/g,' '));});lines.push(v.join(';'));});
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}));a.download='ventis_'+t+'.csv';a.click();
+}
+
+UF('ac');UF('ec');CK('ac');CK('ec');
+</script></body></html>
