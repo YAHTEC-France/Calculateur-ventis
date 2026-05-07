@@ -94,18 +94,6 @@ tbody tr:hover td{background:#e8f4ff}
 .pwr-match td.nm{color:#0a4020!important}
 .pwr-badge{display:inline-block;background:#1e8a4a;color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle}
 
-/* ── Popup avertissement ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(10,37,64,.72);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
-.modal{background:#fff;border-radius:12px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(10,37,64,.35)}
-.modal-hd{background:var(--bd);padding:18px 24px;border-radius:12px 12px 0 0;display:flex;align-items:center;gap:12px}
-.modal-hd h2{color:#fff;font-size:15px;font-weight:600;flex:1;margin:0}
-.modal-bd{padding:22px 24px;font-size:13px;line-height:1.75;color:var(--tx)}
-.modal-bd h3{font-size:11px;font-weight:600;color:var(--tx2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.07em}
-.modal-bd ul{padding-left:16px;margin:4px 0 10px}
-.modal-bd li{margin-bottom:3px}
-.modal-ft{padding:14px 24px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;background:#f8fbff;border-radius:0 0 12px 12px}
-.btn-ok{height:40px;padding:0 28px;background:var(--bl);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
-.btn-ok:hover{background:var(--bm)}
 /* ── Barre bas de page ── */
 .warn-bar{background:var(--wh);border-top:1px solid var(--bdr);padding:9px 32px;font-size:11px;font-family:'DM Mono',monospace;color:var(--tx2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;line-height:1.6}
 .warn-bar a{color:var(--bl);font-weight:500;cursor:pointer;text-decoration:underline;font-family:'DM Mono',monospace}
@@ -120,42 +108,6 @@ tbody tr:hover td{background:#e8f4ff}
 }
 </style></head>
 <body>
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-hd">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5c842" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <h2>Avertissement &mdash; Logiciel de pr&eacute;d&eacute;termination</h2>
-    </div>
-    <div class="modal-bd">
-      <p style="background:#fff8f0;border-left:3px solid #f5c842;padding:9px 14px;border-radius:0 6px 6px 0;font-weight:500;color:#7a5800;margin-bottom:12px">
-        Ce logiciel est un <strong>outil de pr&eacute;d&eacute;termination</strong>. Les r&eacute;sultats sont des estimations indicatives et <strong>ne constituent pas un engagement contractuel</strong> de la part de VENTIS.
-      </p>
-      <h3>Limites d&#39;utilisation</h3>
-      <ul>
-        <li>Calculs calibr&eacute;s sur mesures YAHTEC &mdash; ils peuvent diff&eacute;rer des performances r&eacute;elles en installation.</li>
-        <li>Tout projet doit &ecirc;tre <strong>v&eacute;rifi&eacute; par un bureau d&#39;&eacute;tudes thermiques comp&eacute;tent</strong> avant commande ou installation.</li>
-        <li>R&eacute;sultats valables uniquement dans les plages de temp&eacute;rature indiqu&eacute;es.</li>
-        <li>Cellules en <span style="background:#fff0f0;color:#c0200a;padding:1px 5px;border-radius:3px;font-weight:600">rouge</span> : r&eacute;gime laminaire &mdash; ne pas retenir ce mod&egrave;le.</li>
-      </ul>
-      <h3>Responsabilit&eacute;</h3>
-      <ul>
-        <li>VENTIS d&eacute;cline toute responsabilit&eacute; pour les cons&eacute;quences d&#39;une utilisation sans validation technique pr&eacute;alable.</li>
-        <li>Ce logiciel ne remplace pas une &eacute;tude thermique r&eacute;glementaire (RE2020, DTU).</li>
-        <li>Les donn&eacute;es sont fournies sans garantie expresse ou implicite.</li>
-      </ul>
-      <h3>Usage recommand&eacute;</h3>
-      <ul>
-        <li>Pr&eacute;s&eacute;lection de mod&egrave;les pour r&eacute;pondre &agrave; un besoin estim&eacute;.</li>
-        <li>Document de travail pr&eacute;liminaire &agrave; soumettre &agrave; un bureau d&#39;&eacute;tudes.</li>
-        <li>Comparaison rapide de configurations &mdash; ne pas utiliser seul pour dimensionner.</li>
-      </ul>
-      <p style="font-size:11px;color:var(--tx3);margin-top:12px;font-style:italic">En cliquant sur &laquo;&nbsp;J&#39;ai compris&nbsp;&raquo;, vous reconnaissez avoir pris connaissance de ces limitations.</p>
-    </div>
-    <div class="modal-ft">
-      <button class="btn-ok" id="btnAccept">J&#39;ai compris &mdash; Acc&eacute;der au calculateur</button>
-    </div>
-  </div>
-</div>
 <header>
   <div class="logo">
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#1e6bb8"/><path d="M5 16L11 6L17 16" stroke="#fff" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 12L14 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -832,14 +784,6 @@ function EX(t) {
 // ─────────────────────────────────────────────────────────────────
 UF('ac'); UF('ec'); CK('ac'); CK('ec');
 
-// ── Popup avertissement
-var _modal = document.getElementById('modalOverlay');
-var _btnOk = document.getElementById('btnAccept');
-var _linkM = document.getElementById('linkMentions');
-function _closeModal(){ _modal.style.display='none'; sessionStorage.setItem('vok','1'); }
-if(_btnOk) _btnOk.addEventListener('click', _closeModal);
-if(_linkM) _linkM.addEventListener('click', function(){ _modal.style.display='flex'; });
-if(!sessionStorage.getItem('vok') && _modal){ _modal.style.display='flex'; }
 
 // ─────────────────────────────────────────────────────────────────
 // EXPORT PDF via window.print()
@@ -922,14 +866,6 @@ function PRINT(t) {
 // ─────────────────────────────────────────────────────────────────
 UF('ac'); UF('ec'); CK('ac'); CK('ec');
 
-// ── Popup avertissement
-var _modal = document.getElementById('modalOverlay');
-var _btnOk = document.getElementById('btnAccept');
-var _linkM = document.getElementById('linkMentions');
-function _closeModal(){ _modal.style.display='none'; sessionStorage.setItem('vok','1'); }
-if(_btnOk) _btnOk.addEventListener('click', _closeModal);
-if(_linkM) _linkM.addEventListener('click', function(){ _modal.style.display='flex'; });
-if(!sessionStorage.getItem('vok') && _modal){ _modal.style.display='flex'; }
 
 // ─────────────────────────────────────────────────────────────────
 // EXPORT PDF via html2pdf.js
@@ -993,6 +929,35 @@ function PRINT(t) {
   }
 }
 </script>
+<div id="mentionsModal" style="display:none;position:fixed;inset:0;background:rgba(10,37,64,.72);z-index:9999;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(10,37,64,.35)">
+    <div style="background:var(--bd);padding:16px 24px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:space-between">
+      <span style="color:#fff;font-size:15px;font-weight:600">Avertissement</span>
+      <button onclick="document.getElementById('mentionsModal').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;line-height:1">&times;</button>
+    </div>
+    <div style="padding:22px 24px;font-size:13px;line-height:1.75;color:#0a2540">
+      <p style="background:#fff8f0;border-left:3px solid #f5c842;padding:9px 14px;border-radius:0 6px 6px 0;font-weight:500;color:#7a5800;margin-bottom:14px">
+        Outil de <strong>pr&eacute;d&eacute;termination</strong> uniquement. Ne constitue pas un engagement contractuel.
+      </p>
+      <b style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4a6080">Limites</b>
+      <ul style="padding-left:16px;margin:6px 0 12px">
+        <li>Calculs calibr&eacute;s YAHTEC &mdash; peuvent diff&eacute;rer des performances r&eacute;elles.</li>
+        <li>V&eacute;rification obligatoire par un <strong>bureau d&#39;&eacute;tudes thermiques</strong> avant commande.</li>
+        <li>Cellules rouges : r&eacute;gime laminaire &mdash; ne pas retenir ce mod&egrave;le.</li>
+      </ul>
+      <b style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4a6080">Responsabilit&eacute;</b>
+      <ul style="padding-left:16px;margin:6px 0 12px">
+        <li>VENTIS d&eacute;cline toute responsabilit&eacute; sans validation technique pr&eacute;alable.</li>
+        <li>Ne remplace pas une &eacute;tude thermique r&eacute;glementaire (RE2020, DTU).</li>
+      </ul>
+      <p style="font-size:11px;color:#8aaccc;font-style:italic;margin-top:8px">Calcul VENTIS v2.4</p>
+    </div>
+    <div style="padding:14px 24px;border-top:1px solid #ccdcec;display:flex;justify-content:flex-end;background:#f8fbff;border-radius:0 0 12px 12px">
+      <button onclick="document.getElementById('mentionsModal').style.display='none'" style="height:40px;padding:0 28px;background:#1e6bb8;color:#fff;border:none;border-radius:8px;font-family:sans-serif;font-size:14px;font-weight:600;cursor:pointer">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <div class="warn-bar"><span>Calcul VENTIS v2.4 &nbsp;&middot;&nbsp; Logiciel de pr&eacute;d&eacute;termination &mdash; r&eacute;sultats indicatifs, non contractuels &nbsp;&middot;&nbsp; Cal&eacute; YAHTEC 90/70&deg;C &nbsp;&middot;&nbsp; Propri&eacute;t&eacute;s fluide ASHRAE</span><a id="linkMentions">Voir les mentions l&eacute;gales et avertissements</a></div>
 
 </body>
