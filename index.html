@@ -98,13 +98,31 @@ tbody tr:hover td{background:#e8f4ff}
 .warn-bar{background:var(--wh);border-top:1px solid var(--bdr);padding:9px 32px;font-size:11px;font-family:'DM Mono',monospace;color:var(--tx2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;line-height:1.6}
 .warn-bar a{color:var(--bl);font-weight:500;cursor:pointer;text-decoration:underline;font-family:'DM Mono',monospace}
 @media print{
-  header,.tabs,.card,.card-ec,.bcalc,.bbar,.vsw,.pwr-badge{display:none!important}
-  body{background:#fff;font-size:9px}main{padding:0;max-width:100%}
-  .tc{display:block!important}.fsec{display:block!important}
-  .tw{border:1px solid #ccc;box-shadow:none}table{font-size:8px}.note{display:none}
-  .pwr-match td{background:#e8f5e9!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  header,.tabs,.bcalc,.bbar,.vsw,.warn-bar,#cfaq{display:none!important}
+  .card,.card-ec{display:none!important}
+  body{background:#fff;font-size:9px;margin:0}
+  main{padding:0;max-width:100%}
+  .tc{display:none!important}
+  .tc.on{display:block!important}
+  .fsec.on{display:block!important}
+  .tw{border:none!important;box-shadow:none!important;overflow:visible!important}
+  table{font-size:8px!important;width:100%!important}
+  thead tr.rg th{font-size:8px!important;padding:3px 4px!important}
+  thead tr.rc th{font-size:7px!important;padding:2px 3px!important}
+  tbody tr td{padding:2px 4px!important;font-size:8px!important}
+  .fhdr{padding:6px 10px!important;border-radius:3px 3px 0 0!important}
+  .fhdr h2{font-size:11px!important;color:#fff}
+  .bbar,.note{display:none!important}
+  @page{size:A4 landscape;margin:8mm}
   .hp-grn{background:#f0faf3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .hp-red{background:#fff0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pwr-badge{background:#1e8a4a!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sepac td,.thac,.thgac{background:#0a2540!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sepec td,.thec,.thgec{background:#0a4020!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rcac{background:#d6eaf8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rcec{background:#c8e8d0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .nmac{background:#f0f7ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .nmec{background:#f0faf3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style></head>
 <body>
@@ -113,97 +131,42 @@ tbody tr:hover td{background:#e8f4ff}
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="6" fill="#1e6bb8"/><path d="M5 16L11 6L17 16" stroke="#fff" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M8 12L14 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
     Calcul VENTIS <span class="bac">AC</span><span class="bec">EC</span>
   </div>
-  <div class="hsub">v2.4</div>
+  <div class="hsub" id="hsub-txt">v2.5</div><div style="display:flex;align-items:center;gap:4px;margin-left:12px"><button id="blf" onclick="setLang('fr')" style="background:none;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:12px;font-weight:700;cursor:pointer;padding:2px 8px;border-radius:4px;font-family:'DM Sans',sans-serif">FR</button><button id="ble" onclick="setLang('en')" style="background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-size:12px;font-weight:400;cursor:pointer;padding:2px 8px;border-radius:4px;font-family:'DM Sans',sans-serif">EN</button></div>
 </header>
 <div class="tabs">
   <div class="tab aac" id="tac" onclick="ST('ac')"><div class="tdot" style="background:var(--bl)"></div>Moteur AC — 2 vitesses</div>
   <div class="tab" id="tec" onclick="ST('ec')"><div class="tdot" style="background:var(--gl)"></div>Moteur EC — 5 tensions (2V→10V)</div>
-  <div class="tab" id="tfaq" onclick="ST('faq')"><div class="tdot" style="background:#8aaccc"></div>FAQ &amp; Mentions l&eacute;gales</div>
+  <div class="tab" id="tfaq" onclick="ST('faq')"><div class="tdot" style="background:#8aaccc"></div><span id="t-faq-lbl">FAQ &amp; Mentions</span></div>
 </div>
 <main>
 
 <!-- ===== FAQ ===== -->
 <div class="tc" id="cfaq">
 <div class="card">
-  <div class="ct">FAQ &amp; Mentions l&eacute;gales</div>
-
-  <div style="max-width:780px;margin:0 auto">
-
-    <div style="background:#fff8f0;border-left:3px solid #f5c842;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:24px;font-size:13px;color:#7a5800;font-weight:500">
-      Ce logiciel est un <strong>outil de pr&eacute;d&eacute;termination</strong>. Les r&eacute;sultats sont des estimations indicatives et <strong>ne constituent pas un engagement contractuel</strong> de la part de VENTIS. Tout projet doit &ecirc;tre valid&eacute; par un bureau d&#39;&eacute;tudes thermiques comp&eacute;tent.
-    </div>
-
-    <div style="font-size:14px;font-weight:600;color:var(--bd);margin:20px 0 8px">Limites d&#39;utilisation</div>
-    <div style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">
-      <ul style="padding-left:20px">
-        <li>Calculs calibr&eacute;s sur mesures YAHTEC (90/70&deg;C) &mdash; peuvent diff&eacute;rer des performances r&eacute;elles en installation.</li>
-        <li>R&eacute;sultats valables uniquement entre 40&deg;C et 95&deg;C (d&eacute;part fluide) et -25&deg;C &agrave; +30&deg;C (air entr&eacute;e).</li>
-        <li>Cellules <span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">rouges</span> : r&eacute;gime laminaire &mdash; valeur indicative, <strong>ne pas retenir ce mod&egrave;le</strong> pour votre s&eacute;lection.</li>
-        <li>Cellules <span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">vertes</span> : r&eacute;gime turbulent confirm&eacute; &mdash; calcul fiable.</li>
-      </ul>
-    </div>
-
-    <div style="font-size:14px;font-weight:600;color:var(--bd);margin:20px 0 8px">Responsabilit&eacute;</div>
-    <div style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">
-      <ul style="padding-left:20px">
-        <li>VENTIS d&eacute;cline toute responsabilit&eacute; pour les cons&eacute;quences d&#39;une utilisation sans validation technique pr&eacute;alable.</li>
-        <li>Ce logiciel ne remplace pas une &eacute;tude thermique r&eacute;glementaire (RE2020, DTU applicables).</li>
-        <li>Les donn&eacute;es sont fournies sans garantie expresse ou implicite.</li>
-      </ul>
-    </div>
-
-    <div style="font-size:14px;font-weight:600;color:var(--bd);margin:20px 0 8px">Comment utiliser ce calculateur ?</div>
-    <div style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">
-      <ul style="padding-left:20px">
-        <li><strong>Fluide</strong> : s&eacute;lectionner eau pure ou eau glycol&eacute;e selon votre installation.</li>
-        <li><strong>T d&eacute;part / T retour</strong> : temp&eacute;ratures du circuit hydraulique.</li>
-        <li><strong>T air entr&eacute;e</strong> : temp&eacute;rature de reprise d&#39;air du local.</li>
-        <li><strong>Puissance souhait&eacute;e</strong> : optionnel &mdash; les mod&egrave;les correspondants sont signal&eacute;s par un badge <span style="background:#1e8a4a;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:600">&#x2713;</span>.</li>
-        <li><strong>Altitude</strong> : corriger si l&#39;installation est en altitude (&gt; 500 m).</li>
-      </ul>
-    </div>
-
-    <div style="font-size:14px;font-weight:600;color:var(--bd);margin:20px 0 8px">M&eacute;thode de calcul</div>
-    <div style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">
-      Calcul thermique par <strong>DTLM rigoureux</strong> (Diff&eacute;rence de Temp&eacute;rature Log-Moyenne, contre-courant, it&eacute;ratif). Coefficients <em>k</em> calibr&eacute;s sur mesures YAHTEC &agrave; 90/70&deg;C. Propri&eacute;t&eacute;s fluides interpol&eacute;es ASHRAE. Moteur EC : m&eacute;thode NTU-efficacit&eacute; (UA constant, recalcul &epsilon; &agrave; chaque d&eacute;bit). V&eacute;rification de coh&eacute;rence : &eacute;cart &lt; 3% vs catalogue Aircalo &agrave; iso-conditions.
-    </div>
-
-    <div style="font-size:14px;font-weight:600;color:var(--bd);margin:20px 0 8px">Proc&eacute;dure recommand&eacute;e</div>
-    <div style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:8px">
-      <ol style="padding-left:20px">
-        <li><strong>Pr&eacute;s&eacute;lection</strong> avec ce calculateur &mdash; identifier les mod&egrave;les adapt&eacute;s.</li>
-        <li><strong>Validation BE</strong> &mdash; v&eacute;rification par un bureau d&#39;&eacute;tudes thermiques.</li>
-        <li><strong>Consultation VENTIS</strong> &mdash; confirmation du choix produit et compatibilit&eacute; hydraulique.</li>
-        <li><strong>Commande</strong> &mdash; sur la base du dossier technique valid&eacute;.</li>
-      </ol>
-    </div>
-
-    <div style="font-size:11px;color:var(--tx3);font-family:'DM Mono',monospace;margin-top:28px;padding-top:14px;border-top:1px solid var(--bdr)">
-      Calcul VENTIS v2.4 &nbsp;&middot;&nbsp; Cal&eacute; YAHTEC 90/70&deg;C &nbsp;&middot;&nbsp; Propri&eacute;t&eacute;s fluide ASHRAE &nbsp;&middot;&nbsp; &copy; VENTIS
-    </div>
-
-  </div>
+  <div class="ct"><span id="faq-ct-lbl">FAQ &amp; Mentions l&eacute;gales</span></div>
+  <div id="faq-body" style="max-width:780px;margin:0 auto"></div>
 </div>
 </div>
+
 
 <!-- ===== AC ===== -->
 <div class="tc on" id="cac">
 <div class="card">
   <div class="ct">Conditions — Moteur AC</div>
   <div class="grid">
-    <div class="fld"><label>Fluide</label><select id="flac" onchange="UF('ac')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgac">0 °C</div></div>
-    <div class="fld"><label>T départ</label><input type="number" id="tdac" value="50" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
-    <div class="fld"><label>T retour</label><input type="number" id="trac" value="40" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
-    <div class="fld"><label>T air entrée</label><input type="number" id="taac" value="15" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
-    <div class="fld"><label>Altitude</label><input type="number" id="alac" value="0" step="100" min="0" oninput="CK('ac')"><div class="hint">m</div></div>
-    <div class="fld"><label>Puissance souhaitée</label><input type="number" id="pwac" value="" step="1" min="0" placeholder="optionnel"><div class="hint">kW</div></div>
+    <div class="fld"><label id="la-fl">Fluide</label><select id="flac" onchange="UF('ac')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgac">0 °C</div></div>
+    <div class="fld"><label id="la-td">T départ</label><input type="number" id="tdac" value="50" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label id="la-tr">T retour</label><input type="number" id="trac" value="40" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label id="la-ta">T air entrée</label><input type="number" id="taac" value="15" step="1" oninput="CK('ac')"><div class="hint">°C</div></div>
+    <div class="fld"><label id="la-al">Altitude</label><input type="number" id="alac" value="0" step="100" min="0" oninput="CK('ac')"><div class="hint">m</div></div>
+    <div class="fld"><label id="la-pw">Puissance souhaitée</label><input type="number" id="pwac" value="" step="1" min="0" placeholder="optionnel"><div class="hint">kW</div></div>
   </div>
   <div class="ebar" id="eac"></div>
   <div class="sbar sbar-ac" id="sac">T moy : <span id="tm_ac">—</span> &nbsp;|&nbsp; DTLM : <span id="dtlm_ac">—</span> &nbsp;|&nbsp; ΔT fluide : <span id="dtf_ac">—</span> &nbsp;|&nbsp; ρ air : <span id="rho_ac">—</span></div>
-  <button class="bcalc bac-c" onclick="GO('ac')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Générer fiche AC</button>
+  <button class="bcalc bac-c" onclick="GO('ac')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="btn-ac-lbl">Générer fiche AC</span></button>
 </div>
 <div class="fsec" id="fsac">
-  <div class="bbar"><button class="bs" onclick="PRINT('ac')">🖨 PDF</button><button class="bs" onclick="EX('ac')">⬇ CSV</button></div>
+  <div class="bbar"><button class="bs" onclick="PRINT('ac')">🖨 Imprimer</button><button class="bs" onclick="EX('ac')">⬇ CSV</button></div>
   <div class="fhdr fhdr-ac"><h2>Aérotherme eau chaude VENTIS — Moteur AC</h2><div class="fcond" id="condac"></div></div>
   <div class="tw"><table style="min-width:920px"><thead>
     <tr class="rg"><th class="thac" rowspan="2" style="text-align:left;padding-left:12px;min-width:110px">Type</th><th class="thac" rowspan="2">Vitesse tr/mn</th><th class="thgac" colspan="6">Grande vitesse</th><th class="thgac" colspan="6">Petite vitesse</th></tr>
@@ -218,12 +181,12 @@ tbody tr:hover td{background:#e8f4ff}
 <div class="card card-ec">
   <div class="ct ctec">Conditions — Moteur EC (brushless, commande 0-10V)</div>
   <div class="grid">
-    <div class="fld fldec"><label>Fluide</label><select id="flec" onchange="UF('ec')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgec">0 °C</div></div>
-    <div class="fld fldec"><label>T départ</label><input type="number" id="tdec" value="50" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
-    <div class="fld fldec"><label>T retour</label><input type="number" id="trec" value="40" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
-    <div class="fld fldec"><label>T air entrée</label><input type="number" id="taec" value="15" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
-    <div class="fld fldec"><label>Altitude</label><input type="number" id="alec" value="0" step="100" min="0" oninput="CK('ec')"><div class="hint">m</div></div>
-    <div class="fld fldec"><label>Puissance souhaitée</label><input type="number" id="pwec" value="" step="1" min="0" placeholder="optionnel"><div class="hint">kW</div></div>
+    <div class="fld fldec"><label id="le-fl">Fluide</label><select id="flec" onchange="UF('ec')"><option value="water">Eau pure</option><option value="g20">Glycolée 20%</option><option value="g30">Glycolée 30%</option><option value="g40">Glycolée 40%</option><option value="g50">Glycolée 50%</option></select><div class="hint" id="tgec">0 °C</div></div>
+    <div class="fld fldec"><label id="le-td">T départ</label><input type="number" id="tdec" value="50" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label id="le-tr">T retour</label><input type="number" id="trec" value="40" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label id="le-ta">T air entrée</label><input type="number" id="taec" value="15" step="1" oninput="CK('ec')"><div class="hint">°C</div></div>
+    <div class="fld fldec"><label id="le-al">Altitude</label><input type="number" id="alec" value="0" step="100" min="0" oninput="CK('ec')"><div class="hint">m</div></div>
+    <div class="fld fldec"><label id="le-pw">Puissance souhaitée</label><input type="number" id="pwec" value="" step="1" min="0" placeholder="optionnel"><div class="hint">kW</div></div>
   </div>
   <div style="margin-top:14px">
     <div style="font-size:11px;font-weight:500;color:var(--tx2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Tension de commande VSP affichée dans le tableau</div>
@@ -237,10 +200,10 @@ tbody tr:hover td{background:#e8f4ff}
   </div>
   <div class="ebar" id="eec"></div>
   <div class="sbar sbar-ec" id="sec">T moy : <span id="tm_ec">—</span> &nbsp;|&nbsp; DTLM : <span id="dtlm_ec">—</span> &nbsp;|&nbsp; ΔT fluide : <span id="dtf_ec">—</span> &nbsp;|&nbsp; ρ air : <span id="rho_ec">—</span></div>
-  <button class="bcalc bec-c" onclick="GO('ec')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Générer fiche EC</button>
+  <button class="bcalc bec-c" onclick="GO('ec')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="btn-ec-lbl">Générer fiche EC</span></button>
 </div>
 <div class="fsec" id="fsec">
-  <div class="bbar"><button class="bs bsec" onclick="PRINT('ec')">🖨 PDF</button><button class="bs bsec" onclick="EX('ec')">⬇ CSV</button></div>
+  <div class="bbar"><button class="bs bsec" onclick="PRINT('ec')">🖨 Imprimer</button><button class="bs bsec" onclick="EX('ec')">⬇ CSV</button></div>
   <div class="fhdr fhdr-ec"><h2>Aérotherme eau chaude VENTIS — Moteur EC</h2><div class="fcond" id="condec"></div></div>
   <div class="tw"><table id="tblec" style="min-width:100%;width:100%"><thead id="headec"></thead><tbody id="bec"></tbody></table></div>
   <div class="note nec" id="nec"></div>
@@ -605,14 +568,14 @@ function NS(ns_max, volt) {
 // ─────────────────────────────────────────────────────────────────
 var CV = 10;
 function ST(t) {
-  document.getElementById('cac').classList.toggle('on', t === 'ac');
-  document.getElementById('cec').classList.toggle('on', t === 'ec');
-  var cfaq = document.getElementById('cfaq');
-  if(cfaq) cfaq.classList.toggle('on', t === 'faq');
-  document.getElementById('tac').className = 'tab' + (t === 'ac' ? ' aac' : '');
-  document.getElementById('tec').className = 'tab' + (t === 'ec' ? ' aec' : '');
-  var tfaq = document.getElementById('tfaq');
-  if(tfaq) tfaq.className = 'tab' + (t === 'faq' ? ' aac' : '');
+  ['ac','ec','faq'].forEach(function(x){
+    var c=document.getElementById('c'+x);
+    if(c) c.classList.toggle('on', t===x);
+  });
+  document.getElementById('tac').className='tab'+(t==='ac'?' aac':'');
+  document.getElementById('tec').className='tab'+(t==='ec'?' aec':'');
+  var tf=document.getElementById('tfaq');
+  if(tf) tf.className='tab'+(t==='faq'?' aac':'');
 }
 function SV(v) {
   CV = v;
@@ -723,8 +686,8 @@ function GO_AC(td, tr, ta, alt, fp, flk) {
     if(!isNaN(pw) && pw > 0) {
       var Q_gv = gv.Q, Q_pv = pv.Q;
       // Recommandé : Q >= puissance souhaitée (couvre le besoin) et pas plus de 30% au-dessus
-      var match_gv = Q_gv >= pw && Q_gv <= pw * 1.30;
-      var match_pv = Q_pv >= pw && Q_pv <= pw * 1.30;
+      var match_gv = Q_gv >= pw && Q_gv <= pw * 1.15;
+      var match_pv = Q_pv >= pw && Q_pv <= pw * 1.15;
       if(match_gv) {
         var c1 = row.cells[3];
         c1.innerHTML = '<span class="pwr-badge">✓</span> ' + gv.Q.toFixed(1);
@@ -739,12 +702,7 @@ function GO_AC(td, tr, ta, alt, fp, flk) {
   document.getElementById('condac').textContent =
     'T entrée air : ' + ta + ' °C  |  Fluide : ' + td + '/' + tr + ' °C  |  ' + fp.name +
     (alt > 0 ? '  |  Alt. ' + alt + ' m' : '') + '  |  Montage standard type U';
-  document.getElementById('nac').innerHTML =
-    '<strong>Méthode v2.3 :</strong> k fixe calé YAHTEC à 90/70°C · DTLM rigoureux contre-courant · Propriétés fluide à T_moy=' +
-    ((td+tr)/2).toFixed(0) + '°C · Densité air corrigée altitude · Pdc R×Q<sup>n</sup> calibrée YAHTEC. ' +
-    '<strong>Nson :</strong> Lp à 5m — valeurs YAHTEC (mesure normalisée). ' +
-    '&nbsp;<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Vert</span> = régime turbulent confirmé (Re > 5000) &nbsp;' +
-    '<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Rouge</span> = régime laminaire (Re &lt; 2300) — valeur indicative uniquement, ne pas retenir ce modèle pour votre sélection. Survoler la cellule pour voir Re.';
+  document.getElementById('nac').innerHTML = T('n_ac')+' &nbsp;'+T('n_grn')+T('n_red');
   document.getElementById('fsac').classList.add('on');
   document.getElementById('fsac').scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -809,7 +767,7 @@ function GO_EC(td, tr, ta, alt, fp, flk) {
     var pwec = parseFloat(document.getElementById('pwec').value);
     if(!isNaN(pwec) && pwec > 0 && typeof lastR !== 'undefined') {
       var Q_ec = lastR.Q;
-      if(Q_ec >= pwec && Q_ec <= pwec * 1.30) {
+      if(Q_ec >= pwec && Q_ec <= pwec * 1.15) {
         var badge = row.cells[3];
         if(badge) badge.innerHTML = '<span class="pwr-badge">✓</span> ' + Q_ec.toFixed(1);
       }
@@ -820,12 +778,7 @@ function GO_EC(td, tr, ta, alt, fp, flk) {
   document.getElementById('condec').textContent =
     'T entrée air : ' + ta + ' °C  |  Fluide : ' + td + '/' + tr + ' °C  |  ' + fp.name +
     (alt > 0 ? '  |  Alt. ' + alt + ' m' : '') + '  |  Commande 0-10V';
-  document.getElementById('nec').innerHTML =
-    '<strong>Méthode v2.3 :</strong> k fixe calé YAHTEC à 90/70°C · NTU-ε physique (UA calibré à 10V, recalcul ε à chaque débit) · ' +
-    'Propriétés fluide à T_moy=' + ((td+tr)/2).toFixed(0) + '°C · Densité air corrigée altitude · ' +
-    'Débits EC Weiguang (mesurés batterie montée). Nson par loi acoustique (−4 dB/−20% vitesse). ' +
-    '&nbsp;<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Vert</span> = régime turbulent confirmé (Re > 5000) &nbsp;' +
-    '<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Rouge</span> = régime laminaire (Re &lt; 2300) — valeur indicative uniquement, ne pas retenir ce modèle pour votre sélection. Survoler la cellule pour voir Re.';
+  document.getElementById('nec').innerHTML = T('n_ec')+' &nbsp;'+T('n_grn')+T('n_red');
   document.getElementById('fsec').classList.add('on');
   document.getElementById('fsec').scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -848,99 +801,311 @@ function EX(t) {
   a.click();
 }
 
+
+// ════════════════════════════════════════════════════════
+// BILINGUE FR / EN
+// ════════════════════════════════════════════════════════
+var LANG='fr';
+
+var D={
+  subtitle: {fr:'v2.5 \u2014 Autonome',          en:'v2.5 \u2014 Standalone'},
+  tab_faq:  {fr:'FAQ & Mentions',                 en:'FAQ & Legal'},
+  tab_ac:   {fr:'Moteur AC \u2014 2 vitesses',    en:'AC Motor \u2014 2 speeds'},
+  tab_ec:   {fr:'Moteur EC \u2014 5 tensions',    en:'EC Motor \u2014 5 voltages'},
+  fl_w:     {fr:'Eau pure',                       en:'Pure water'},
+  fl_20:    {fr:'Glycol\u00e9e 20%',              en:'Glycol 20%'},
+  fl_30:    {fr:'Glycol\u00e9e 30%',              en:'Glycol 30%'},
+  fl_40:    {fr:'Glycol\u00e9e 40%',              en:'Glycol 40%'},
+  fl_50:    {fr:'Glycol\u00e9e 50%',              en:'Glycol 50%'},
+  lb_fl:    {fr:'Fluide',                         en:'Fluid'},
+  lb_td:    {fr:'T d\u00e9part',                  en:'Supply temp.'},
+  lb_tr:    {fr:'T retour',                       en:'Return temp.'},
+  lb_ta:    {fr:'T air entr\u00e9e',              en:'Inlet air'},
+  lb_al:    {fr:'Altitude',                       en:'Altitude'},
+  lb_pw:    {fr:'Puissance souhait\u00e9e',       en:'Required output'},
+  btn_ac:   {fr:'G\u00e9n\u00e9rer fiche AC',     en:'Generate AC sheet'},
+  btn_ec:   {fr:'G\u00e9n\u00e9rer fiche EC',     en:'Generate EC sheet'},
+  wb:       {fr:'Calcul VENTIS v2.5 \u00b7 Logiciel de pr\u00e9d\u00e9termination \u2014 r\u00e9sultats indicatifs, non contractuels \u00b7 Cal\u00e9 YAHTEC 90/70\u00b0C',
+             en:'VENTIS Calculator v2.5 \u00b7 Pre-sizing tool \u2014 indicative results, non-contractual \u00b7 Calibrated YAHTEC 90/70\u00b0C'},
+  wb_lnk:   {fr:'Mentions l\u00e9gales & FAQ',    en:'Legal notices & FAQ'},
+  n_ac:     {fr:'M\u00e9thode v2.5\u00a0: k fix\u00e9 cal\u00e9 YAHTEC 90/70\u00b0C \u00b7 DTLM contre-courant it\u00e9ratif \u00b7 Propri\u00e9t\u00e9s fluide interpol\u00e9es ASHRAE \u00b7 Pdc R\u00d7Q\u207f. <strong>Nson\u00a0:</strong> Lp 5m YAHTEC.',
+             en:'Method v2.5: fixed k calibrated YAHTEC 90/70\u00b0C \u00b7 Counterflow iterative LMTD \u00b7 ASHRAE interpolated fluid properties \u00b7 R\u00d7Q\u207f pressure drop. <strong>Sound:</strong> Lp 5m YAHTEC.'},
+  n_ec:     {fr:'M\u00e9thode v2.5\u00a0: NTU-\u03b5 (UA calibr\u00e9 10V, recalcul \u03b5 chaque d\u00e9bit) \u00b7 Propri\u00e9t\u00e9s fluide ASHRAE \u00b7 D\u00e9bits EC Weiguang mesur\u00e9s batterie mont\u00e9e.',
+             en:'Method v2.5: NTU-\u03b5 (UA calibrated at 10V, \u03b5 recalculated per flow) \u00b7 ASHRAE fluid properties \u00b7 EC Weiguang airflows measured with installed coil.'},
+  n_grn:    {fr:'<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Vert</span> = turbulent (Re&gt;5000)\u00a0\u00a0',
+             en:'<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Green</span> = turbulent (Re&gt;5000)\u00a0\u00a0'},
+  n_red:    {fr:'<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Rouge</span> = laminaire (Re&lt;2300) \u2014 ne pas retenir ce mod\u00e8le.',
+             en:'<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Red</span> = laminar (Re&lt;2300) \u2014 do not select this model.'},
+};
+
+function T(k){ return D[k]?( D[k][LANG]||D[k].fr ):k; }
+
+function setLang(l){
+  LANG=l;
+  var bf=document.getElementById('blf');
+  var be=document.getElementById('ble');
+  if(bf){ bf.style.fontWeight=l==='fr'?'700':'400'; bf.style.borderColor=l==='fr'?'rgba(255,255,255,.8)':'rgba(255,255,255,.2)'; bf.style.color=l==='fr'?'#fff':'rgba(255,255,255,.4)'; }
+  if(be){ be.style.fontWeight=l==='en'?'700':'400'; be.style.borderColor=l==='en'?'rgba(255,255,255,.8)':'rgba(255,255,255,.2)'; be.style.color=l==='en'?'#fff':'rgba(255,255,255,.4)'; }
+  applyLang();
+}
+
+function _s(id,txt,html){
+  var e=document.getElementById(id);
+  if(!e) return;
+  if(html) e.innerHTML=txt; else e.textContent=txt;
+}
+
+function applyLang(){
+  _s('hsub-txt', T('subtitle'));
+  _s('t-faq-lbl', T('tab_faq'));
+  _s('faq-ct-lbl', T('tab_faq'));
+  // Labels AC
+  _s('la-fl',T('lb_fl')); _s('la-td',T('lb_td')); _s('la-tr',T('lb_tr'));
+  _s('la-ta',T('lb_ta')); _s('la-al',T('lb_al')); _s('la-pw',T('lb_pw'));
+  // Labels EC
+  _s('le-fl',T('lb_fl')); _s('le-td',T('lb_td')); _s('le-tr',T('lb_tr'));
+  _s('le-ta',T('lb_ta')); _s('le-al',T('lb_al')); _s('le-pw',T('lb_pw'));
+  // Boutons
+  _s('btn-ac-lbl', T('btn_ac'));
+  _s('btn-ec-lbl', T('btn_ec'));
+  // Warn bar
+  _s('wb-txt', T('wb'), true);
+  _s('wb-lnk', T('wb_lnk'));
+  // Fluides
+  ['flac','flec'].forEach(function(id){
+    var s=document.getElementById(id); if(!s) return;
+    var kk=['fl_w','fl_20','fl_30','fl_40','fl_50'];
+    kk.forEach(function(k,i){ if(s.options[i]) s.options[i].text=T(k); });
+  });
+  // FAQ
+  buildFAQ();
+}
+
+function buildFAQ(){
+  var el=document.getElementById('faq-body'); if(!el) return;
+  var f=LANG==='fr';
+  el.innerHTML=
+    '<div style="background:#fff8f0;border-left:3px solid #f5c842;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:20px;font-size:13px;color:#7a5800;font-weight:500">'
+    +(f?'Ce logiciel est un <strong>outil de pr\u00e9d\u00e9termination</strong>. Les r\u00e9sultats sont des estimations indicatives et <strong>ne constituent pas un engagement contractuel</strong> de la part de VENTIS. Tout projet doit \u00eatre valid\u00e9 par un bureau d\'tudes thermiques comp\u00e9tent avant toute commande ou installation.'
+      :'This software is a <strong>pre-sizing tool</strong>. Results are indicative estimates and <strong>do not constitute a contractual commitment</strong> by VENTIS. All projects must be validated by a qualified thermal engineering office before any order or installation.')
+    +'</div>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Limites d\'utilisation':'Limitations of use')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li>'+(f?'Calculs calibr\u00e9s sur mesures YAHTEC \u00e0 90/70\u00b0C \u2014 peuvent diff\u00e9rer des performances r\u00e9elles en installation.':'Calculations calibrated on YAHTEC measurements at 90/70\u00b0C \u2014 may differ from actual installed performance.')+'</li>'
+    +'<li>'+(f?'R\u00e9sultats valables uniquement entre 40\u00b0C et 95\u00b0C (d\u00e9part fluide) et -25\u00b0C \u00e0 +30\u00b0C (air entr\u00e9e).':'Results valid only between 40\u00b0C and 95\u00b0C (supply fluid) and -25\u00b0C to +30\u00b0C (inlet air).')+'</li>'
+    +'<li>'+T('n_red')+'</li>'
+    +'<li>'+T('n_grn')+(f?'= r\u00e9gime turbulent confirm\u00e9 \u2014 calcul fiable.':'= confirmed turbulent flow \u2014 reliable calculation.')+'</li>'
+    +'<li>'+(f?'Les niveaux sonores sont des valeurs YAHTEC mesur\u00e9es en conditions normalis\u00e9es (Lp \u00e0 5m, montage mural). Les valeurs r\u00e9elles d\u00e9pendent de la r\u00e9verb\u00e9ration du local.':'Sound levels are YAHTEC values measured under standardised conditions (Lp at 5m, wall mounting). Actual values depend on room reverberation.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Responsabilit\u00e9':'Liability')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li>'+(f?'VENTIS d\u00e9cline toute responsabilit\u00e9 pour les cons\u00e9quences directes ou indirectes d\'une utilisation sans validation technique pr\u00e9alable.':'VENTIS declines all liability for direct or indirect consequences of use without prior technical validation.')+'</li>'
+    +'<li>'+(f?'Ce logiciel ne remplace pas une \u00e9tude thermique r\u00e9glementaire (RE2020, DTU applicables).':'This software does not replace a regulatory thermal study (RE2020, applicable DTU).')+'</li>'
+    +'<li>'+(f?'Les donn\u00e9es sont fournies sans garantie expresse ou implicite.':'Data is provided without express or implied warranty.')+'</li>'
+    +'<li>'+(f?'L\'utilisateur est seul responsable de la v\u00e9rification des r\u00e9sultats et de leur ad\u00e9quation aux exigences sp\u00e9cifiques de son projet.':'The user is solely responsible for verifying results and their suitability for their specific project requirements.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Comment utiliser ce calculateur ?':'How to use this calculator?')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li><b>'+(f?'Fluide':'Fluid')+'</b> : '+(f?'s\u00e9lectionner eau pure ou eau glycol\u00e9e selon votre installation.':'select pure water or glycol water according to your system.')+'</li>'
+    +'<li><b>'+(f?'T d\u00e9part / T retour':'Supply / Return temp.')+'</b> : '+(f?'temp\u00e9ratures du circuit hydraulique. L\'\u00e9cart minimum recommand\u00e9 est de 10 K.':'hydraulic circuit temperatures. Minimum recommended differential is 10 K.')+'</li>'
+    +'<li><b>'+(f?'T air entr\u00e9e':'Inlet air temp.')+'</b> : '+(f?'temp\u00e9rature de reprise d\'air du local (\u00e0 ne pas confondre avec la temp\u00e9rature ext\u00e9rieure).':'room return air temperature (not to be confused with outdoor temperature).')+'</li>'
+    +'<li><b>'+(f?'Altitude':'Altitude')+'</b> : '+(f?'corriger si l\'installation est en altitude (&gt; 500 m). Impact sur la densit\u00e9 de l\'air et donc la puissance.':'correct if installation is at altitude (&gt; 500 m). Affects air density and therefore output.')+'</li>'
+    +'<li><b>'+(f?'Puissance souhait\u00e9e':'Required output')+'</b> : '+(f?'optionnel \u2014 badge \u2713 sur les mod\u00e8les dont la puissance est entre 100% et 115% de la valeur saisie.':'optional \u2014 \u2713 badge on models with output between 100% and 115% of entered value.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'M\u00e9thode de calcul':'Calculation method')+'</p>'
+    +'<p style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">'
+    +(f?'Calcul thermique par <strong>DTLM rigoureux</strong> (Diff\u00e9rence de Temp\u00e9rature Log-Moyenne, contre-courant, it\u00e9ratif). Coefficients <em>k</em> calibr\u00e9s sur mesures YAHTEC \u00e0 90/70\u00b0C. Propri\u00e9t\u00e9s fluides interpol\u00e9es selon les tables ASHRAE. Moteur EC\u00a0: m\u00e9thode NTU-efficacit\u00e9 (UA constant calibr\u00e9 \u00e0 10V, recalcul \u03b5 \u00e0 chaque d\u00e9bit). V\u00e9rification de coh\u00e9rence\u00a0: \u00e9cart &lt;\u00a03% vs catalogue Aircalo \u00e0 iso-conditions (m\u00eame temp\u00e9rature d\'air).'
+      :'Thermal calculation using rigorous <strong>LMTD</strong> (Log Mean Temperature Difference, counterflow, iterative). <em>k</em> coefficients calibrated on YAHTEC measurements at 90/70\u00b0C. Fluid properties interpolated from ASHRAE tables. EC motor: NTU-effectiveness method (constant UA calibrated at 10V, \u03b5 recalculated per flow rate). Validation: &lt;\u00a03% deviation vs Aircalo catalogue at equal conditions (same inlet air temperature).')
+    +'</p>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Gamme couverte':'Product range')+'</p>'
+    +'<p style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">'
+    +(f?'A\u00e9rothermes eau chaude VENTIS, gammes T3 \u00e0 T7, moteurs AC (2 vitesses) et EC (commande 0-10V). Les mod\u00e8les not\u00e9s M sont monophas\u00e9s, les mod\u00e8les T sont triphas\u00e9s.'
+      :'VENTIS hot water unit heaters, series T3 to T7, AC motors (2 speeds) and EC motors (0-10V control). Models marked M are single-phase, models marked T are three-phase.')
+    +'</p>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Proc\u00e9dure recommand\u00e9e':'Recommended procedure')+'</p>'
+    +'<ol style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li><strong>'+(f?'Pr\u00e9s\u00e9lection':'Pre-selection')+'</strong> \u2014 '+(f?'identifier les mod\u00e8les adapt\u00e9s avec ce calculateur.':'identify suitable models using this calculator.')+'</li>'
+    +'<li><strong>'+(f?'Validation BE':'Engineering validation')+'</strong> \u2014 '+(f?'v\u00e9rification par un bureau d\'\u00e9tudes thermiques comp\u00e9tent.':'verification by a qualified thermal engineering office.')+'</li>'
+    +'<li><strong>'+(f?'Consultation VENTIS':'VENTIS consultation')+'</strong> \u2014 '+(f?'confirmation du choix produit et compatibilit\u00e9 hydraulique.':'product selection confirmation and hydraulic compatibility.')+'</li>'
+    +'<li><strong>'+(f?'Commande':'Order')+'</strong> \u2014 '+(f?'sur la base du dossier technique valid\u00e9.':'based on the validated technical file.')+'</li>'
+    +'</ol>'
+
+    +'<div style="font-size:11px;color:var(--tx3);font-family:\'DM Mono\',monospace;margin-top:24px;padding-top:12px;border-top:1px solid var(--bdr)">'
+    +'Calcul VENTIS v2.5 \u00b7 '+(f?'Cal\u00e9':'Calibrated')+' YAHTEC 90/70\u00b0C \u00b7 '+(f?'Propri\u00e9t\u00e9s fluide':'Fluid properties')+' ASHRAE \u00b7 \u00a9 VENTIS \u2014 '+(f?'Document \u00e0 usage commercial pr\u00e9liminaire.':'For preliminary commercial use only.')
+    +'</div>';
+}
+
 // ─────────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────────
 UF('ac'); UF('ec'); CK('ac'); CK('ec');
-// ─────────────────────────────────────────────────────────────────
-// EXPORT PDF via window.print()
-// Injection d'une feuille de style temporaire pour impression optimisée
-// ─────────────────────────────────────────────────────────────────
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',applyLang);}else{applyLang();}
+
+
+
 function PRINT(t) {
-  var el = document.getElementById('fs' + t);
-  if(!el || !el.classList.contains('on')) {
-    alert('Générez la fiche ' + t.toUpperCase() + ' avant d\'exporter en PDF.');
+  var el=document.getElementById('fs'+t);
+  if(!el||!el.classList.contains('on')){
+    alert(LANG==='en'?'Generate the '+t.toUpperCase()+' sheet first.':'G\u00e9n\u00e9rez la fiche '+t.toUpperCase()+' avant d\'imprimer.');
     return;
   }
-  // Masquer tout sauf la fiche concernée
-  var cond  = document.getElementById('cond' + t).textContent;
-  var titre = t === 'ac'
-    ? 'Aérotherme eau chaude VENTIS — Moteur AC'
-    : 'Aérotherme eau chaude VENTIS — Moteur EC';
-
-  // Créer une fenêtre d'impression dédiée
-  var win = window.open('', '_blank', 'width=1200,height=800');
-  if(!win) { alert('Autorisez les popups pour générer le PDF.'); return; }
-
-  // Récupérer les styles du document courant
-  var styles = '';
-  for(var i=0;i<document.styleSheets.length;i++){
-    try {
-      var rules = document.styleSheets[i].cssRules || document.styleSheets[i].rules;
-      if(rules) for(var j=0;j<rules.length;j++) styles += rules[j].cssText + '\n';
-    } catch(e){}
-  }
-
-  var html = '<!DOCTYPE html><html lang="fr"><head>'
-    + '<meta charset="UTF-8">'
-    + '<title>VENTIS — ' + cond + '</title>'
-    + '<style>'
-    + styles
-    + '@page { size: A4 landscape; margin: 10mm 8mm; }'
-    + 'body { background:#fff; font-family: Arial, sans-serif; font-size:9px; }'
-    + '.print-header { margin-bottom:10px; padding-bottom:8px; border-bottom:2px solid #0a2540; display:flex; justify-content:space-between; align-items:flex-end; }'
-    + '.print-title { font-size:13px; font-weight:700; color:#0a2540; }'
-    + '.print-cond { font-size:9px; color:#4a6080; font-family:monospace; }'
-    + '.bbar, .note { display:none !important; }'
-    + '.fhdr { border-radius:4px 4px 0 0; padding:8px 12px; }'
-    + '.fhdr h2 { font-size:11px; }'
-    + '.fcond { font-size:8px; }'
-    + 'table { font-size:8px; width:100%; border-collapse:collapse; }'
-    + 'thead tr.rg th { font-size:8px; padding:4px 5px; }'
-    + 'thead tr.rc th { font-size:7.5px; padding:3px 4px; }'
-    + 'tbody tr td { padding:3px 5px; font-size:8px; }'
-    + 'td.nm { font-size:8.5px; }'
-    + '.tw { overflow:visible !important; box-shadow:none; }'
-    + '.hp-grn { background:#f0faf3 !important; color:#0a4020 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.hp-red { background:#fff0f0 !important; color:#c0200a !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.pwr-badge { background:#1e8a4a !important; color:#fff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.sepac td { background:#0a2540 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.sepec td { background:#0a4020 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.thac,.thgac { background:#0a2540 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.thec,.thgec { background:#0a4020 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.rcac { background:#d6eaf8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.rcec { background:#c8e8d0 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.nmac { background:#f0f7ff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '.nmec { background:#f0faf3 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }'
-    + '</style></head><body>'
-    + '<div class="print-header">'
-    + '  <div>'
-    + '    <div class="print-title">VENTIS — ' + titre + '</div>'
-    + '    <div class="print-cond">' + cond + '</div>'
-    + '  </div>'
-    + '  <div style="font-size:8px;color:#8aaccc">Calcul VENTIS v2.3-HT &nbsp;|&nbsp; ' + new Date().toLocaleDateString('fr-FR') + '</div>'
-    + '</div>'
-    + el.innerHTML
-    + '</body></html>';
-
-  win.document.write(html);
-  win.document.close();
-  win.focus();
-  setTimeout(function(){ win.print(); }, 800);
+  window.print();
 }
+
+
+// ════════════════════════════════════════════════════════
+// BILINGUE FR / EN
+// ════════════════════════════════════════════════════════
+var LANG='fr';
+
+var D={
+  subtitle: {fr:'v2.5 \u2014 Autonome',          en:'v2.5 \u2014 Standalone'},
+  tab_faq:  {fr:'FAQ & Mentions',                 en:'FAQ & Legal'},
+  tab_ac:   {fr:'Moteur AC \u2014 2 vitesses',    en:'AC Motor \u2014 2 speeds'},
+  tab_ec:   {fr:'Moteur EC \u2014 5 tensions',    en:'EC Motor \u2014 5 voltages'},
+  fl_w:     {fr:'Eau pure',                       en:'Pure water'},
+  fl_20:    {fr:'Glycol\u00e9e 20%',              en:'Glycol 20%'},
+  fl_30:    {fr:'Glycol\u00e9e 30%',              en:'Glycol 30%'},
+  fl_40:    {fr:'Glycol\u00e9e 40%',              en:'Glycol 40%'},
+  fl_50:    {fr:'Glycol\u00e9e 50%',              en:'Glycol 50%'},
+  lb_fl:    {fr:'Fluide',                         en:'Fluid'},
+  lb_td:    {fr:'T d\u00e9part',                  en:'Supply temp.'},
+  lb_tr:    {fr:'T retour',                       en:'Return temp.'},
+  lb_ta:    {fr:'T air entr\u00e9e',              en:'Inlet air'},
+  lb_al:    {fr:'Altitude',                       en:'Altitude'},
+  lb_pw:    {fr:'Puissance souhait\u00e9e',       en:'Required output'},
+  btn_ac:   {fr:'G\u00e9n\u00e9rer fiche AC',     en:'Generate AC sheet'},
+  btn_ec:   {fr:'G\u00e9n\u00e9rer fiche EC',     en:'Generate EC sheet'},
+  wb:       {fr:'Calcul VENTIS v2.5 \u00b7 Logiciel de pr\u00e9d\u00e9termination \u2014 r\u00e9sultats indicatifs, non contractuels \u00b7 Cal\u00e9 YAHTEC 90/70\u00b0C',
+             en:'VENTIS Calculator v2.5 \u00b7 Pre-sizing tool \u2014 indicative results, non-contractual \u00b7 Calibrated YAHTEC 90/70\u00b0C'},
+  wb_lnk:   {fr:'Mentions l\u00e9gales & FAQ',    en:'Legal notices & FAQ'},
+  n_ac:     {fr:'M\u00e9thode v2.5\u00a0: k fix\u00e9 cal\u00e9 YAHTEC 90/70\u00b0C \u00b7 DTLM contre-courant it\u00e9ratif \u00b7 Propri\u00e9t\u00e9s fluide interpol\u00e9es ASHRAE \u00b7 Pdc R\u00d7Q\u207f. <strong>Nson\u00a0:</strong> Lp 5m YAHTEC.',
+             en:'Method v2.5: fixed k calibrated YAHTEC 90/70\u00b0C \u00b7 Counterflow iterative LMTD \u00b7 ASHRAE interpolated fluid properties \u00b7 R\u00d7Q\u207f pressure drop. <strong>Sound:</strong> Lp 5m YAHTEC.'},
+  n_ec:     {fr:'M\u00e9thode v2.5\u00a0: NTU-\u03b5 (UA calibr\u00e9 10V, recalcul \u03b5 chaque d\u00e9bit) \u00b7 Propri\u00e9t\u00e9s fluide ASHRAE \u00b7 D\u00e9bits EC Weiguang mesur\u00e9s batterie mont\u00e9e.',
+             en:'Method v2.5: NTU-\u03b5 (UA calibrated at 10V, \u03b5 recalculated per flow) \u00b7 ASHRAE fluid properties \u00b7 EC Weiguang airflows measured with installed coil.'},
+  n_grn:    {fr:'<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Vert</span> = turbulent (Re&gt;5000)\u00a0\u00a0',
+             en:'<span style="background:#f0faf3;color:#0a4020;padding:1px 6px;border-radius:3px;font-weight:600">Green</span> = turbulent (Re&gt;5000)\u00a0\u00a0'},
+  n_red:    {fr:'<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Rouge</span> = laminaire (Re&lt;2300) \u2014 ne pas retenir ce mod\u00e8le.',
+             en:'<span style="background:#fff0f0;color:#c0200a;padding:1px 6px;border-radius:3px;font-weight:600">Red</span> = laminar (Re&lt;2300) \u2014 do not select this model.'},
+};
+
+function T(k){ return D[k]?( D[k][LANG]||D[k].fr ):k; }
+
+function setLang(l){
+  LANG=l;
+  var bf=document.getElementById('blf');
+  var be=document.getElementById('ble');
+  if(bf){ bf.style.fontWeight=l==='fr'?'700':'400'; bf.style.borderColor=l==='fr'?'rgba(255,255,255,.8)':'rgba(255,255,255,.2)'; bf.style.color=l==='fr'?'#fff':'rgba(255,255,255,.4)'; }
+  if(be){ be.style.fontWeight=l==='en'?'700':'400'; be.style.borderColor=l==='en'?'rgba(255,255,255,.8)':'rgba(255,255,255,.2)'; be.style.color=l==='en'?'#fff':'rgba(255,255,255,.4)'; }
+  applyLang();
+}
+
+function _s(id,txt,html){
+  var e=document.getElementById(id);
+  if(!e) return;
+  if(html) e.innerHTML=txt; else e.textContent=txt;
+}
+
+function applyLang(){
+  _s('hsub-txt', T('subtitle'));
+  _s('t-faq-lbl', T('tab_faq'));
+  _s('faq-ct-lbl', T('tab_faq'));
+  // Labels AC
+  _s('la-fl',T('lb_fl')); _s('la-td',T('lb_td')); _s('la-tr',T('lb_tr'));
+  _s('la-ta',T('lb_ta')); _s('la-al',T('lb_al')); _s('la-pw',T('lb_pw'));
+  // Labels EC
+  _s('le-fl',T('lb_fl')); _s('le-td',T('lb_td')); _s('le-tr',T('lb_tr'));
+  _s('le-ta',T('lb_ta')); _s('le-al',T('lb_al')); _s('le-pw',T('lb_pw'));
+  // Boutons
+  _s('btn-ac-lbl', T('btn_ac'));
+  _s('btn-ec-lbl', T('btn_ec'));
+  // Warn bar
+  _s('wb-txt', T('wb'), true);
+  _s('wb-lnk', T('wb_lnk'));
+  // Fluides
+  ['flac','flec'].forEach(function(id){
+    var s=document.getElementById(id); if(!s) return;
+    var kk=['fl_w','fl_20','fl_30','fl_40','fl_50'];
+    kk.forEach(function(k,i){ if(s.options[i]) s.options[i].text=T(k); });
+  });
+  // FAQ
+  buildFAQ();
+}
+
+function buildFAQ(){
+  var el=document.getElementById('faq-body'); if(!el) return;
+  var f=LANG==='fr';
+  el.innerHTML=
+    '<div style="background:#fff8f0;border-left:3px solid #f5c842;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:20px;font-size:13px;color:#7a5800;font-weight:500">'
+    +(f?'Ce logiciel est un <strong>outil de pr\u00e9d\u00e9termination</strong>. Les r\u00e9sultats sont des estimations indicatives et <strong>ne constituent pas un engagement contractuel</strong> de la part de VENTIS. Tout projet doit \u00eatre valid\u00e9 par un bureau d\'tudes thermiques comp\u00e9tent avant toute commande ou installation.'
+      :'This software is a <strong>pre-sizing tool</strong>. Results are indicative estimates and <strong>do not constitute a contractual commitment</strong> by VENTIS. All projects must be validated by a qualified thermal engineering office before any order or installation.')
+    +'</div>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Limites d\'utilisation':'Limitations of use')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li>'+(f?'Calculs calibr\u00e9s sur mesures YAHTEC \u00e0 90/70\u00b0C \u2014 peuvent diff\u00e9rer des performances r\u00e9elles en installation.':'Calculations calibrated on YAHTEC measurements at 90/70\u00b0C \u2014 may differ from actual installed performance.')+'</li>'
+    +'<li>'+(f?'R\u00e9sultats valables uniquement entre 40\u00b0C et 95\u00b0C (d\u00e9part fluide) et -25\u00b0C \u00e0 +30\u00b0C (air entr\u00e9e).':'Results valid only between 40\u00b0C and 95\u00b0C (supply fluid) and -25\u00b0C to +30\u00b0C (inlet air).')+'</li>'
+    +'<li>'+T('n_red')+'</li>'
+    +'<li>'+T('n_grn')+(f?'= r\u00e9gime turbulent confirm\u00e9 \u2014 calcul fiable.':'= confirmed turbulent flow \u2014 reliable calculation.')+'</li>'
+    +'<li>'+(f?'Les niveaux sonores sont des valeurs YAHTEC mesur\u00e9es en conditions normalis\u00e9es (Lp \u00e0 5m, montage mural). Les valeurs r\u00e9elles d\u00e9pendent de la r\u00e9verb\u00e9ration du local.':'Sound levels are YAHTEC values measured under standardised conditions (Lp at 5m, wall mounting). Actual values depend on room reverberation.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Responsabilit\u00e9':'Liability')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li>'+(f?'VENTIS d\u00e9cline toute responsabilit\u00e9 pour les cons\u00e9quences directes ou indirectes d\'une utilisation sans validation technique pr\u00e9alable.':'VENTIS declines all liability for direct or indirect consequences of use without prior technical validation.')+'</li>'
+    +'<li>'+(f?'Ce logiciel ne remplace pas une \u00e9tude thermique r\u00e9glementaire (RE2020, DTU applicables).':'This software does not replace a regulatory thermal study (RE2020, applicable DTU).')+'</li>'
+    +'<li>'+(f?'Les donn\u00e9es sont fournies sans garantie expresse ou implicite.':'Data is provided without express or implied warranty.')+'</li>'
+    +'<li>'+(f?'L\'utilisateur est seul responsable de la v\u00e9rification des r\u00e9sultats et de leur ad\u00e9quation aux exigences sp\u00e9cifiques de son projet.':'The user is solely responsible for verifying results and their suitability for their specific project requirements.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Comment utiliser ce calculateur ?':'How to use this calculator?')+'</p>'
+    +'<ul style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li><b>'+(f?'Fluide':'Fluid')+'</b> : '+(f?'s\u00e9lectionner eau pure ou eau glycol\u00e9e selon votre installation.':'select pure water or glycol water according to your system.')+'</li>'
+    +'<li><b>'+(f?'T d\u00e9part / T retour':'Supply / Return temp.')+'</b> : '+(f?'temp\u00e9ratures du circuit hydraulique. L\'\u00e9cart minimum recommand\u00e9 est de 10 K.':'hydraulic circuit temperatures. Minimum recommended differential is 10 K.')+'</li>'
+    +'<li><b>'+(f?'T air entr\u00e9e':'Inlet air temp.')+'</b> : '+(f?'temp\u00e9rature de reprise d\'air du local (\u00e0 ne pas confondre avec la temp\u00e9rature ext\u00e9rieure).':'room return air temperature (not to be confused with outdoor temperature).')+'</li>'
+    +'<li><b>'+(f?'Altitude':'Altitude')+'</b> : '+(f?'corriger si l\'installation est en altitude (&gt; 500 m). Impact sur la densit\u00e9 de l\'air et donc la puissance.':'correct if installation is at altitude (&gt; 500 m). Affects air density and therefore output.')+'</li>'
+    +'<li><b>'+(f?'Puissance souhait\u00e9e':'Required output')+'</b> : '+(f?'optionnel \u2014 badge \u2713 sur les mod\u00e8les dont la puissance est entre 100% et 115% de la valeur saisie.':'optional \u2014 \u2713 badge on models with output between 100% and 115% of entered value.')+'</li>'
+    +'</ul>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'M\u00e9thode de calcul':'Calculation method')+'</p>'
+    +'<p style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">'
+    +(f?'Calcul thermique par <strong>DTLM rigoureux</strong> (Diff\u00e9rence de Temp\u00e9rature Log-Moyenne, contre-courant, it\u00e9ratif). Coefficients <em>k</em> calibr\u00e9s sur mesures YAHTEC \u00e0 90/70\u00b0C. Propri\u00e9t\u00e9s fluides interpol\u00e9es selon les tables ASHRAE. Moteur EC\u00a0: m\u00e9thode NTU-efficacit\u00e9 (UA constant calibr\u00e9 \u00e0 10V, recalcul \u03b5 \u00e0 chaque d\u00e9bit). V\u00e9rification de coh\u00e9rence\u00a0: \u00e9cart &lt;\u00a03% vs catalogue Aircalo \u00e0 iso-conditions (m\u00eame temp\u00e9rature d\'air).'
+      :'Thermal calculation using rigorous <strong>LMTD</strong> (Log Mean Temperature Difference, counterflow, iterative). <em>k</em> coefficients calibrated on YAHTEC measurements at 90/70\u00b0C. Fluid properties interpolated from ASHRAE tables. EC motor: NTU-effectiveness method (constant UA calibrated at 10V, \u03b5 recalculated per flow rate). Validation: &lt;\u00a03% deviation vs Aircalo catalogue at equal conditions (same inlet air temperature).')
+    +'</p>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Gamme couverte':'Product range')+'</p>'
+    +'<p style="font-size:13px;color:var(--tx2);line-height:1.8;margin-bottom:16px">'
+    +(f?'A\u00e9rothermes eau chaude VENTIS, gammes T3 \u00e0 T7, moteurs AC (2 vitesses) et EC (commande 0-10V). Les mod\u00e8les not\u00e9s M sont monophas\u00e9s, les mod\u00e8les T sont triphas\u00e9s.'
+      :'VENTIS hot water unit heaters, series T3 to T7, AC motors (2 speeds) and EC motors (0-10V control). Models marked M are single-phase, models marked T are three-phase.')
+    +'</p>'
+
+    +'<p style="font-size:14px;font-weight:600;color:var(--bd);margin:18px 0 7px">'+(f?'Proc\u00e9dure recommand\u00e9e':'Recommended procedure')+'</p>'
+    +'<ol style="font-size:13px;color:var(--tx2);line-height:1.8;padding-left:20px;margin-bottom:16px">'
+    +'<li><strong>'+(f?'Pr\u00e9s\u00e9lection':'Pre-selection')+'</strong> \u2014 '+(f?'identifier les mod\u00e8les adapt\u00e9s avec ce calculateur.':'identify suitable models using this calculator.')+'</li>'
+    +'<li><strong>'+(f?'Validation BE':'Engineering validation')+'</strong> \u2014 '+(f?'v\u00e9rification par un bureau d\'\u00e9tudes thermiques comp\u00e9tent.':'verification by a qualified thermal engineering office.')+'</li>'
+    +'<li><strong>'+(f?'Consultation VENTIS':'VENTIS consultation')+'</strong> \u2014 '+(f?'confirmation du choix produit et compatibilit\u00e9 hydraulique.':'product selection confirmation and hydraulic compatibility.')+'</li>'
+    +'<li><strong>'+(f?'Commande':'Order')+'</strong> \u2014 '+(f?'sur la base du dossier technique valid\u00e9.':'based on the validated technical file.')+'</li>'
+    +'</ol>'
+
+    +'<div style="font-size:11px;color:var(--tx3);font-family:\'DM Mono\',monospace;margin-top:24px;padding-top:12px;border-top:1px solid var(--bdr)">'
+    +'Calcul VENTIS v2.5 \u00b7 '+(f?'Cal\u00e9':'Calibrated')+' YAHTEC 90/70\u00b0C \u00b7 '+(f?'Propri\u00e9t\u00e9s fluide':'Fluid properties')+' ASHRAE \u00b7 \u00a9 VENTIS \u2014 '+(f?'Document \u00e0 usage commercial pr\u00e9liminaire.':'For preliminary commercial use only.')
+    +'</div>';
+}
+
 // ─────────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────────
 UF('ac'); UF('ec'); CK('ac'); CK('ec');
-function hideMentions(){
-  var m=document.getElementById('mentionsModal');
-  if(m){ m.style.display='none'; }
-}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',applyLang);}else{applyLang();}
 
 
-// ─────────────────────────────────────────────────────────────────
-// EXPORT PDF via html2pdf.js
-// ─────────────────────────────────────────────────────────────────
+
 function PRINT(t) {
   var el = document.getElementById('fs' + t);
   if(!el || !el.classList.contains('on')) {
@@ -975,11 +1140,11 @@ function PRINT(t) {
     };
     html2pdf().set(opt).from(wrap).save().then(function(){
       document.body.removeChild(wrap);
-      btn.textContent = '🖨 PDF';
+      btn.textContent = '🖨 Imprimer';
       btn.disabled = false;
     }).catch(function(e){
       document.body.removeChild(wrap);
-      btn.textContent = '🖨 PDF';
+      btn.textContent = '🖨 Imprimer';
       btn.disabled = false;
       alert('Erreur PDF : ' + e.message);
     });
@@ -990,7 +1155,7 @@ function PRINT(t) {
     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
     s.onload = doIt;
     s.onerror = function(){
-      btn.textContent = '🖨 PDF';
+      btn.textContent = '🖨 Imprimer';
       btn.disabled = false;
       alert('Impossible de charger html2pdf. Vérifiez votre connexion internet.');
     };
@@ -1000,9 +1165,36 @@ function PRINT(t) {
   }
 }
 </script>
+<div id="mentionsModal" style="display:none;position:fixed;inset:0;background:rgba(10,37,64,.72);z-index:9999;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:12px;max-width:620px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(10,37,64,.35)">
+    <div style="background:var(--bd);padding:16px 24px;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:space-between">
+      <span style="color:#fff;font-size:15px;font-weight:600">Avertissement</span>
+      <button onclick="document.getElementById('mentionsModal').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;line-height:1">&times;</button>
+    </div>
+    <div style="padding:22px 24px;font-size:13px;line-height:1.75;color:#0a2540">
+      <p style="background:#fff8f0;border-left:3px solid #f5c842;padding:9px 14px;border-radius:0 6px 6px 0;font-weight:500;color:#7a5800;margin-bottom:14px">
+        Outil de <strong>pr&eacute;d&eacute;termination</strong> uniquement. Ne constitue pas un engagement contractuel.
+      </p>
+      <b style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4a6080">Limites</b>
+      <ul style="padding-left:16px;margin:6px 0 12px">
+        <li>Calculs calibr&eacute;s YAHTEC &mdash; peuvent diff&eacute;rer des performances r&eacute;elles.</li>
+        <li>V&eacute;rification obligatoire par un <strong>bureau d&#39;&eacute;tudes thermiques</strong> avant commande.</li>
+        <li>Cellules rouges : r&eacute;gime laminaire &mdash; ne pas retenir ce mod&egrave;le.</li>
+      </ul>
+      <b style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4a6080">Responsabilit&eacute;</b>
+      <ul style="padding-left:16px;margin:6px 0 12px">
+        <li>VENTIS d&eacute;cline toute responsabilit&eacute; sans validation technique pr&eacute;alable.</li>
+        <li>Ne remplace pas une &eacute;tude thermique r&eacute;glementaire (RE2020, DTU).</li>
+      </ul>
+      <p style="font-size:11px;color:#8aaccc;font-style:italic;margin-top:8px">Calcul VENTIS v2.4</p>
+    </div>
+    <div style="padding:14px 24px;border-top:1px solid #ccdcec;display:flex;justify-content:flex-end;background:#f8fbff;border-radius:0 0 12px 12px">
+      <button onclick="document.getElementById('mentionsModal').style.display='none'" style="height:40px;padding:0 28px;background:#1e6bb8;color:#fff;border:none;border-radius:8px;font-family:sans-serif;font-size:14px;font-weight:600;cursor:pointer">Fermer</button>
+    </div>
+  </div>
+</div>
 
-
-<div class="warn-bar"><span>Calcul VENTIS v2.4 &nbsp;&middot;&nbsp; Logiciel de pr&eacute;d&eacute;termination &mdash; r&eacute;sultats indicatifs, non contractuels &nbsp;&middot;&nbsp; Cal&eacute; YAHTEC 90/70&deg;C &nbsp;&middot;&nbsp; Propri&eacute;t&eacute;s fluide ASHRAE</span><a href="#" onclick="var m=document.getElementById('mentionsModal');m.style.display='flex';return false;" style="cursor:pointer">Voir les mentions l&eacute;gales et avertissements</a></div>
+<div class="warn-bar"><span id="wb-txt">Calcul VENTIS v2.5 &nbsp;&middot;&nbsp; Logiciel de pr&eacute;d&eacute;termination &mdash; r&eacute;sultats indicatifs, non contractuels &nbsp;&middot;&nbsp; Cal&eacute; YAHTEC 90/70&deg;C &nbsp;&middot;&nbsp; Propri&eacute;t&eacute;s fluide ASHRAE</span><a id="linkMentions">Voir les mentions l&eacute;gales et avertissements</a></div>
 
 </body>
 </html>
